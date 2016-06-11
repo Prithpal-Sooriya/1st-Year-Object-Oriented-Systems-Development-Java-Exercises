@@ -1,0 +1,78 @@
+/*
+ * Here is my code for chapter 5, exercise 11.
+ * Hope this helps
+ * 
+ */
+package Chapter05;
+
+/**
+ *
+ * @author James
+ */
+public class Ex11_ComputeCommission {
+
+//Sales Amount ($)         Rate (%)
+//0.01 - 5,000             8
+//5,000.01 - 10,000        10
+//10,000.01 +              12
+    
+    public static void main(String[] args) {
+    
+        //Print headers
+        System.out.println("Sales Amount            Commission");
+        System.out.println("----------------------------------");
+        
+        //Loop to generate table contents
+        
+        //Vairables
+        int salesAmount = 10000;
+        double comission = 0;
+        
+        while (salesAmount <= 100000){
+            comission = computeComission(salesAmount);
+            System.out.printf("%d \t %23.2f \n", salesAmount, comission);
+            salesAmount += 5000;
+        }
+    }
+    
+    public static double computeComission (double salesAmount) {
+     
+        //if sales amount is greater than 10,000.00
+            //sales amount - 10,000 = temp value
+            //Calculate commission at 12% on temp value
+        
+        //if sales amount is greater than 5,000 & less that 10,000
+            //sales amount - 5,000 = temp value
+            //Calculate commission at 10% on temp value
+        
+        //if sales amount is less that 5,000
+            //calculate commission at 8%
+        
+        //Add up commission
+        
+        //Vairables
+        double twelvePercent = 0;
+        double tenPercent = 0;
+        double eightPercent = 0;
+                
+        if (salesAmount > 10000){
+            double tempValue = salesAmount - 10000;
+            twelvePercent = (tempValue / 100) * 12;
+            salesAmount = salesAmount - tempValue;
+        }
+        
+        if (salesAmount <= 10000 && salesAmount > 5000){
+            double tempValue = salesAmount - 5000;
+            tenPercent = (tempValue / 100) * 10;
+            salesAmount = salesAmount - tempValue;
+        }
+        
+        if (salesAmount <= 5000){
+            eightPercent = (salesAmount / 100) * 8;
+        }
+        
+        double commission = eightPercent + tenPercent + twelvePercent;
+        
+        return (commission);
+    }
+}
