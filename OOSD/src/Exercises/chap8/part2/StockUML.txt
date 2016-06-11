@@ -1,0 +1,8 @@
+Stock
+===========
+-double previousClosingPrice
+-double currentPrice
+===========
++Stock(double previousClosingPrice, double currentPrice)
++getChangePercent()
+//getters and setters for the previousClosingPrice and currentPrice

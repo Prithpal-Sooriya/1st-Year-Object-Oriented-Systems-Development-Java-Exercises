@@ -1,0 +1,13 @@
+FAN
+============
+-int SLOW = 1
+-int MEDIUM = 2
+-int FAST = 3
+-int speed = SLOW
+-boolean on = false
+-double radius = 5
+-String colour = "blue"
+=========================
++Fan() //no args constructor
++setters and getters for all the variables
++toString method

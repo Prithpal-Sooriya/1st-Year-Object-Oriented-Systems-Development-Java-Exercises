@@ -1,0 +1,15 @@
+Account
+================
+-int id = 0
+-double balance = 0
+-double annualInterestRate = 0 //remember this is a percentage so will /100
+-Date dateCreated
+================
++Account() //no args account (will need to give dateCreated)
++Account(int id, double InitialBalance)
++getters and setters for id, balance, and annual interest rate
++getter for dateCreated
++getMonthlyInterestRate()
++getMonthlyInterest()
++withdraw()
++diposit()

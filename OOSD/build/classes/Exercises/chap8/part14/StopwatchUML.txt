@@ -1,0 +1,11 @@
+Stopwatch
+==================
+long startTime = 0
+long endTime = 0
+==================
++StopWatch() //no arg constructor
++getters for both the variables
+
++start() //save millisecond time into start time
++stop() //save millisecond time into end time
++getElapsedTime() //record the time elapsed

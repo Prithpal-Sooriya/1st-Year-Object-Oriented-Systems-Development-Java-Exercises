@@ -1,0 +1,10 @@
+Rectangle
+===========
+-double width = 1
+-double height = 1
+===========
++Rectangle() //no args constuctor
++Rectangle(double width, double height) //set width and height
++getArea()
++getPerimeter()
+//getters and setters for the width and height
