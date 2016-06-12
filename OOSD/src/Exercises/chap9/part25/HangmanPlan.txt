@@ -1,0 +1,23 @@
+Hangman Plan
+
+randomly generate the word
+    --> accessed from the array so just need to randomly pick index from array
+        --> Random.randInt(min, max)? Math.Random
+    --> word need to be ******
+        --> find the length of the word and FOR loop to generate asterisks
+
+user enters 1 letter at a time
+    --> scanner
+    --> while loop to repeat the board if they make a mistake/ continue with the game
+
+user correct guess ****le
+    -->store all of the users inputs into an array
+        -->int userAlphabet[], all 0, until user says the letter, becomes 1
+        -->use with the FOR loop when creating the asterisks
+
+complete word, show how many misses
+    --> store in "int misses" and increment when the player misses
+
+complete word, ask to play again
+    --> create the most outer WHILE loop with run command
+        --> if the player says no, then game ends, if the player says yes the game continues
