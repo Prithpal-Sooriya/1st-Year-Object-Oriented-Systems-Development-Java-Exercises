@@ -1,0 +1,11 @@
+Time
+=============
+long hour
+long minute
+long second
+=============
++Time() //no arg constructor, current time in formal
++Time(String millis) //produces millisecond result, done by use of constant
++time (long time) //produces formatted result
++getters only for the 3 datafields
++setTime(long millis) //sets the time format in milliseconds given
