@@ -1,0 +1,14 @@
+Circle2D
+=============
+-double x
+-double y
+-double radius
+=============
++Circle2D() //no arg constructor
++Circle2D(double x, double y, double radius)
++get methods for x, y, and radius
++getArea()
++getPerimeter()
++contains(double x, double y)
++contains(Circle2D c)
++overlaps(Circle2D c)
