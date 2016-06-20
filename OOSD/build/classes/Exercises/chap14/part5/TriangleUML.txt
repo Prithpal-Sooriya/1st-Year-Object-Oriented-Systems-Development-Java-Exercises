@@ -1,0 +1,12 @@
+Triangle extends GeometricObject
+=================================
+-double side1 = 1
+-double side2 = 1
+-double side3 = 1
+================================
++Triangle() //no arg constructor = default triangle
++Triangle(double side1, double side2, double side3) //constructor for the 3 sides
++get methods for the 3 sides
++getArea() //get area of the triangle
++getPerimeter() //get the perimeter of the triangle
++toString() returns the description of the triangle
