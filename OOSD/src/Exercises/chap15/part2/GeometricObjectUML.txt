@@ -1,0 +1,12 @@
+GeometricObject (Abstract)
+==========================
++String colour
++boolean filled
++Date dateCreated
+
+==========================
++getArea() //abstract
++getPerimeter //abstract
++get methods for colour, filled, dateCreated
++set method for colour, filled
++toString method
