@@ -1,0 +1,14 @@
+GeometricObject (Abstract) (implements: Comparable<GeometricObject>)
+==========================
++String colour
++boolean filled
++Date dateCreated
+
+==========================
++getArea() //abstract
++getPerimeter //abstract
++compareTo(GeometricObject t) //override interface
++max(GeometricObject geo1, GeometricObject geo2) //public static method, larger of both the objects (1 = geo1, -1 = geo2, 0 = same) 
++get methods for colour, filled, dateCreated
++set method for colour, filled
++toString method
