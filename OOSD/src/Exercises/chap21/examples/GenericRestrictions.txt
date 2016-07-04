@@ -1,0 +1,24 @@
+Generic's have restrictions for use of the JVM
+
+Why?
+    --> the JVM converts generic code back into Objects to be backwards compatible to early generations of Java
+
+restriction 1:
+--> Cannot use "new E()"
+    --> you cannot add a generic as a class to the heap
+
+restriction 2:
+--> cannot user "new E[]"
+    --> you cannot add a generic as an array to the heap
+
+restriction 3:
+--> Generic type of a class cannot be static:
+    -->class <E>{ }
+        --> static void m(E e){} //illegal
+        --> static E e //illegal
+        --> static{E e} //illegal
+
+restriction 4:
+--> Exception classes cannot be generic
+    --> myException<E> extends exception
+    --> if you try to do a try and catch, the JVM cannot define the generic
