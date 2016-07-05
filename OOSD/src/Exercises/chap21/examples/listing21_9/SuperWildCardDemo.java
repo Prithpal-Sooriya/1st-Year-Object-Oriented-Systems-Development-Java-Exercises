@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Exercises.chap21.examples.listing29_9;
+package Exercises.chap21.examples.listing21_9;
 
 import Exercises.chap21.examples.listing21_1.GenericStack;
-import static Exercises.chap21.examples.listing29_8.AnyWildCardDemo.print;
+import static Exercises.chap21.examples.listing21_8.AnyWildCardDemo.print;
 
 /**
  *

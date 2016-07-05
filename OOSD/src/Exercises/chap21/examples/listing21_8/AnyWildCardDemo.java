@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Exercises.chap21.examples.listing29_8;
+package Exercises.chap21.examples.listing21_8;
 
 import Exercises.chap21.examples.listing21_1.GenericStack;
 
