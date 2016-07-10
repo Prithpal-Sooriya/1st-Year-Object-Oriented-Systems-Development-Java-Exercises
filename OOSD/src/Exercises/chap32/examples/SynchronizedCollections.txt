@@ -1,0 +1,18 @@
+Synchronized Collections
+
+Collections in java are not safe
+    --> arrays, stacks, queues, linked lists, hash maps, other data structures are all collections
+    --> not safe, for example if multiple threads read and write to the collection
+
+types of synchronised collections methods: Collections class
+    --> public static Collection synchronizedCollection(Collection c)
+    --> public static List synchronizedList(List l)
+    --> public static Map synchronizedMap(Map m)
+    --> public static Set synchronizedSet(Set s)
+    --> public static SortedMap synchronizedSortedMap(SortedMap m)
+    --> public static SortedSet synchronizedSortedSet(SortedSet s)
+
+what happens when invoking these
+    --> when invoked the Collection (or list, sorted (unsorted) map/set) methods are synchronised
+        --> done by using the syncronised keyword
+        --> e.g. "add()" method is now "synchronized add()"

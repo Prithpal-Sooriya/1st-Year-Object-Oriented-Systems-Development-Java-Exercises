@@ -1,0 +1,25 @@
+Thread states
+
+How a thread works
+
+    --> New state (thread created)
+        -->  When you call the new method (Thread t = new Thread(Runnable r);)
+    
+    --> Ready state (ready to be ran)
+        --> when you call the start method (t.start())
+        --> code may not be running yet though
+    
+    --> Running state (code in thread being ran)
+        --> run() method in Runnable (what is overrided when implementing Runnable)
+        --> Code and methods of task are ran
+        --> yield() method from thread can return the thread back to the Ready state
+    
+    --> Finished state (code in thread is finished)
+        --> when the run() method is finished
+        --> means the thread has ended and can be disposed of or reused (reuse the Thread name)
+
+    --> Blocking state (code stopped in particular place in thread)
+        --> join() method in thread = waits for the thread to finish, can be sent back to the Ready state
+        --> sleep() method in thread = causes the thread to "sleep"/stop running code for a certain period of time
+            --> once the sleep method has ended, the thread will be resumed in the same location is was previously in
+        --> wait() method in thread = wait to be notified (by a signal)

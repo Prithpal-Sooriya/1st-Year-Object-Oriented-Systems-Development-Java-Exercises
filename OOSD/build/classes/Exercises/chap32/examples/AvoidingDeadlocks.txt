@@ -1,0 +1,34 @@
+Avoiding Deadlocks
+
+what are deadlocks?
+    --> Deadlocks are when to threads try to access the same resource with a lock()
+        --> thread 1 has lock for object 1; thread 2 has lock for object 2
+        --> if thread 1 wants to access object2, and thread2 wants to access object1...
+            --> they are stuck and wont ever continue since they can never complete and unlock
+
+How to fix deadlocks
+    -->by resource ordering
+        --> assign order to resources/locks so that the order or locking and unlocking so methods can use without issues
+
+    -->e.g. bad = can cause deadlock
+Thread:
+A.lock();
+B.lock();
+Foo();
+A.unlock();
+Bar(); //wants to reacquire A, but cant as code is holding B and then trying to get A --> can get deadlock
+B.unlock();
+
+Thread:
+A.lock();
+B.lock();
+Foo();
+B.unlock();
+Bar(); //We still have A, so we don't need to reacquire, does not break order, thus no deadlock
+A.unlock();
+
+Basically, for each lock() made, there should be an unlock at the end
+
+THERE SHOULD BE ONLY 1 LOCK AND 1 UNLOCK FOR EACH LOCK
+    --> bad example above was A.lock, A.unlock, A.lock
+    --> good example above was A.lock, A.unlock
