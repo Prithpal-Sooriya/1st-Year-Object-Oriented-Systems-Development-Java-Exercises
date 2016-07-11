@@ -16,3 +16,16 @@ what happens when invoking these
     --> when invoked the Collection (or list, sorted (unsorted) map/set) methods are synchronised
         --> done by using the syncronised keyword
         --> e.g. "add()" method is now "synchronized add()"
+
+Cannot use iterator on synchronized classes --> iterator is fail-fast
+    --> cannot traverse the collection if another thread/method is modifying or adding to the collection
+    
+Fix this by creating a synchronized collection object and acquire a lock to traverse or to write.
+    -->e.g.
+Set hashSet = Collections.synchronizedSet(new HashSet());
+synchronized (hashSet) { //sync the set
+    Iterator iterator = hashSet.setIterator();
+    while(iterator.hasNext(){
+        System.out.println(iterator.next());
+    }
+}
