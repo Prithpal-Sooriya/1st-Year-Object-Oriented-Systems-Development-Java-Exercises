@@ -27,14 +27,14 @@ public class ParallelArrayInitialiser {
         startTime = System.currentTimeMillis();
         parallelAssignValues(list1);
         endTime = System.currentTimeMillis();
-        System.out.println("Time taken in parallel assign values: " + (endTime - startTime));
+        System.out.println("Time taken in parallel assign values: " + (endTime - startTime) + " milliseconds");
         System.out.println("With " + Runtime.getRuntime().availableProcessors() + " number of processors");
         
         //get the start time, run sequential method, get end time, display time taken
         startTime = System.currentTimeMillis();
         sequentialAssignValues(list2);
         endTime = System.currentTimeMillis();
-        System.out.println("Time taken in sequential assign values: " + (endTime - startTime));
+        System.out.println("Time taken in sequential assign values: " + (endTime - startTime) + " milliseconds");
     }
     
     //sequential method to assign values to list
@@ -52,7 +52,7 @@ public class ParallelArrayInitialiser {
         int endingIndex = list.length;
         //create a recursive action (which is a subclass of ForkJoinClass to use in ForkJoinPool)
         //call class that extends RecursiveAction so can use its compute method
-        RecursiveAction task = new SplitAssignList(list);
+        RecursiveAction task = new SplitAssignList(list, startingIndex, endingIndex);
         ForkJoinPool pool = new ForkJoinPool();
         pool.invoke(task);
     }
@@ -63,50 +63,53 @@ public class ParallelArrayInitialiser {
         
         //variables to be using
         double[] list;
-        //int startingIndex;
-        //int endingIndex;
+        final int startingIndex;
+        final int endingIndex;
         
         //constructor
         //param1 = the list, param2 = the starting index, param3 = the ending index for the FOR loop
-        public SplitAssignList(double[] list){
+        public SplitAssignList(double[] list, int startingIndex, int endingIndex){
             this.list = list;
+            this.startingIndex = startingIndex;
+            this.endingIndex = endingIndex;
         }
 
         //override method from RecursiveAction
         @Override
         protected void compute() {
             //set a base case
-            if(list.length <= 50){
+            if((endingIndex - startingIndex) < 50){
                 //populate the list
                 Random rand = new Random();
-                for(int i = 0; i < list.length; i++){
+                for(int i = startingIndex; i < endingIndex; i++){
                     list[i] = rand.nextDouble() * 10000000;
                 }
             }
             else{
                 //need to split the list into 2 parts
-                int firstHalfLength = list.length / 2;
-                int secondHalfLength = list.length - (list.length / 2); //this is becuase rounded down if odd number
+                int middle = (startingIndex + endingIndex) / 2;
+                //int secondHalfLength = list.length - (list.length / 2); //this is becuase rounded down if odd number
                 
-                double[] firstHalfList = new double[firstHalfLength];
-                double[] secondHalfList = new double[secondHalfLength];
+                //double[] firstHalfList = new double[firstHalfLength];
+                //double[] secondHalfList = new double[secondHalfLength];
                 
                 //recursion on the list
                 /*invokeAll method from ForkJoinTask, calls a new thread for the RecursiveAction param given*/
-                invokeAll(new SplitAssignList(firstHalfList), new SplitAssignList(secondHalfList));
+                invokeAll(new SplitAssignList(list, startingIndex, middle), new SplitAssignList(list, middle, endingIndex));
                 
-                //combine the lists together
-                /*params
-                param1 = list with items
-                param2 = starting index the popluated list
-                param3 = new list to populate
-                param4 = starting index of new list
-                param5 = how much you want to copy
-                */
-                //copy the first half
-                System.arraycopy(firstHalfList, 0, list, 0, firstHalfLength);
-                //copy the second half
-                System.arraycopy(secondHalfList, 0, list, firstHalfLength, secondHalfLength);
+//                //NOT USING THIS, it slows the parallel program too much that it is slower than sequential version
+//                //combine the lists together
+//                /*params
+//                param1 = list with items
+//                param2 = starting index the popluated list
+//                param3 = new list to populate
+//                param4 = starting index of new list
+//                param5 = how much you want to copy
+//                */
+//                //copy the first half
+//                System.arraycopy(firstHalfList, 0, list, 0, firstHalfLength);
+//                //copy the second half
+//                System.arraycopy(secondHalfList, 0, list, firstHalfLength, secondHalfLength);
                 
             }
         }
