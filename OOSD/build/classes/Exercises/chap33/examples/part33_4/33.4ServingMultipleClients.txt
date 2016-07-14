@@ -1,0 +1,19 @@
+Serving Multiple Clients
+
+    --> Usually multiple clients connect to a single server
+    
+    --> You can use multiple threads to handle with the multiple clients
+        --> each client has their own thread (a thread for each connection)
+
+    -->Example code of how to use threads for multiple clients on a server
+while(true){
+    Socket socket = serverSocket.accept(); //accept a connection to a client, blocks/waits will a client wants to connect
+    Thread thread = new ThreadClass(socket) //send that socket to a class that extends thread (to do what we want to socket)
+    thread.start(); //start the thread
+}
+
+The infinite while loop can let us keep searching for clients
+    --> if a client is NOT found, the code underneath is blocked/not ran
+        --> wait till a client wants to connect
+    --> if a client is found send the socket through Thread
+        --> the Thread is a class made so we can use our own code on the thread

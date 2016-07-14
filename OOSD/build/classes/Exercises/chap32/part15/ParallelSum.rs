@@ -1,0 +1,2 @@
+Exercises.chap32.part15.RecursiveTaskParallelSum
+Exercises.chap32.part15.ParallelSum

@@ -1,0 +1,16 @@
+Server Sockets
+
+Establishing a server
+    --> create a server socket and attach it to a port
+        --> the socket is where the server listens for connections
+        --> the port identifies the TCP service on the socket
+
+Port
+    --> port numbers range: 0 - 65536
+    --> however 0 - 1024 are reserved for privileged services
+        --> email server runs on port 25
+        --> web server runs on port 80
+    --> you can choose any port number that is not used by other connections/sockets/programs
+
+Java
+    --> ServerSocket serverSocket = new ServerSocket(port)  

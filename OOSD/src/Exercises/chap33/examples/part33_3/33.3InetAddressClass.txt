@@ -1,0 +1,23 @@
+The InetAddress Class
+
+What if we want to know who is connecting to the server
+    --> Use the InetAddress class to find the host name and IP address
+        --> The InetAddress class models an IP address
+
+============
+Server:
+
+Statement to use in a server program to get an instance of InetAddress
+on a socket that connects to the client
+    --> InetAddress inetAddress = socket.getInetAddress();
+
+Next you can display the clients host name and IP address
+System.out.println("Client HostName: " + inetAddress.getHostName());
+System.out.println("Client IP Address: " + inetAddress.getHostAddress());
+
+You can also create an instance of InetAddress from a hostname or IP address
+
+InetAddress address = InetAddress.getByName("www.google.com"); //static method to get address
+
+*REMEMBER* InetAddress models IP address
+    --> a good way to get the ip address from a domain name (www.google.com) and manipulate the IP address

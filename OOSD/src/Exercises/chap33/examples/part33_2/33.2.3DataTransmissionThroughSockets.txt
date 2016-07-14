@@ -1,0 +1,20 @@
+Data transmission through sockets
+
+After client socket makes a successful connection to server socket...
+    -->...the communication is the same as I/O streams.
+
+What streams to use
+    --> the data sent through the Sockets can be any input/output stream
+        --> if data sent is through a dataOutputStream, you must read data through dataInputStream
+        --> if data sent is through a objectOutputStream, you must read data through ObjectInputStream
+        --> if data sent is through a PrintWriter, you must read data through PrintReader
+        --> ect.
+
+How to get the streams:
+    --> seperate the data from the socket, e.g.
+        --> DataInputStream in = new DataInputStream(socket.getInputStream);
+        --> DataOutputStream out = new DataOutputStream(socket.getOutputStream);
+
+    --> reading data (e.g. if this is from the server)
+        in.readDouble(); //retrieve a double value from the client
+        out.writeDouble(double d); //send a double value to the client

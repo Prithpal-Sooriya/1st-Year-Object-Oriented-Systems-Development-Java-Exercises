@@ -1,0 +1,16 @@
+TCP and UDP
+
+TCP
+--> larger overhead
+--> enables 2 hosts to establish a connection and exchange data streams
+--> guarantees that packet will be delivered in same order in which they were sent
+--> lossless (can detect lost transmissions) and reliable
+
+UDP
+--> low overhead
+--> connectionless
+--> host to host protocol that is used over the IP
+--> allows an application program on one computer to send a datagram to another computer
+--> cannot guarantee lossless transmission
+--------------------------------
+Java allows both stream based (TCP) and packet based communication (UDP)

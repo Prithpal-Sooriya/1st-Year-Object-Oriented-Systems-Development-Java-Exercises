@@ -1,0 +1,23 @@
+Client/Server Computing
+
+What does Java do to establish a connection:
+    --> Java API utilises socket to allow communication
+
+
+what are Sockets:
+    --> Sockets are the endpoints of logical connections between to hosts
+    --> can be used to send and receive data
+    --> Java treats sockets as I/O operations (such as streams), thus sockets and be read from and written to
+
+Network programming:
+    --> 1 Server and multiple clients
+
+    CLIENT
+    --> clients first have to try to establish a connection to the server
+        --> the server can accept or deny the connection to the client
+    --> once connection is established, the client and server communicate using sockets
+    --> clients sends data to a server, and the server responds
+
+    SERVER
+    --> the server must be running for the client to establish a connection
+    --> the server waits for a connection request from a client.

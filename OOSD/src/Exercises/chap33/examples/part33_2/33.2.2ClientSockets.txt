@@ -1,0 +1,15 @@
+Client sockets
+
+after a server socket is created, the server can use the following code to listen for connections:
+    --> Socket socket = serverSocket.accept();
+        --> waits until a client connnects to the server socket
+
+The client runs the following code to request a connection to a server:
+    --> Socket socket = new Socket(serverName, port)
+        --> opens a socket so that the client program can communicate with a server.
+        --> "serverName" is the server's internet host name or IP address.
+
+Examples for Client socket connecting to Server:
+    --> Socket socket = new Socket("130.254.201.3", 8000); //param1 = IP address of server, param2 = port number
+    --> Socket socket = new Socket("google.com", 8000); //param1 = domain name of server, param2 = port number
+        --> The JVM asks the DNS to translate the host name into an IP address
