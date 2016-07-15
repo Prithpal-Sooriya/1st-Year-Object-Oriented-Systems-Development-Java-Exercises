@@ -1,0 +1,9 @@
+Sending and receiving objects:
+
+As the input and output streams for Sockets can be anything
+    --> we can use ObjectInputStream and ObjectOutputStream to send and receive objects
+
+To send objects, the objects must be Serializable
+    --> implements the Serializable class
+        --> static method are not read by Serializable
+        --> if you do not want a datatype to be serializable, then use the key word transient

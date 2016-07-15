@@ -1,0 +1,9 @@
+Applet clients
+
+The client can be an applet that connects to a server running on host which applet is loaded
+
+    --> Applets can only connect to a host from which they were loaded
+        --> thus HTML file must be located on the machine
+
+    --> you can get the servers host name by: getCodeBase().getHostName() on an applet
+        --> you can write a applet without the host name fixed
