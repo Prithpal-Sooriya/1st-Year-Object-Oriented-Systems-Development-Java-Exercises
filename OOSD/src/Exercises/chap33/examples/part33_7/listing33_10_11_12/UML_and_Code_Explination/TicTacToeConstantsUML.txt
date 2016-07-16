@@ -1,0 +1,9 @@
+<interface>
+TicTacToeConstants
+====================
++ int PLAYER1 = 1 //indicate player1
++ int PLAYER2 = 2 //indicate player2
++ int PLAYER1_WON = 1 //indicate player1 won (end session/game thread, and show to clients winner)
++ int PLAYER2_WON = 2 //indicate player2 won (end session/game thread, and show to clients winner)
++ int DRAW = 3 //indicate draw (end session/game thread, and show to clients draw)
++ int CONTINUE = 4 //indicate to continue with session/game thread (continue to next players turn)

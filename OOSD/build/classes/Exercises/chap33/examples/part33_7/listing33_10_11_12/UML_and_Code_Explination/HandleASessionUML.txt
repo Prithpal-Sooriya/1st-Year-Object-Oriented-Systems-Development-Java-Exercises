@@ -1,0 +1,14 @@
+HandleASession
+//this class is where the game will run
+//handles the game mechanics for server and returns results to clients
+//this is aggregation to the server (the server HAS A HandleASession)
+====================
+- socket player1 //responsible for handling connection with player1
+- socket player2 //responsible for handling connection with player2
+- char[][] cell //3x3 2d char array, to indicate positions already taken, and open positions
+- boolean continueToPlay //this is for the while loop (to loop through each players turns) until turned false, then while loop ends
+====================
++ void run()
+- boolean isWon()
+- isFull() //check if char[][] cell is full
+- void sendMove(DataOutputStream out, int row, int column) //send the move made (player1 or player2) to clients

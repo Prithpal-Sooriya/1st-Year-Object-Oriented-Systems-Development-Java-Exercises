@@ -1,0 +1,6 @@
+TicTacToeServer
+===================
+//no variables
+===================
++main(String[] args) //create the server (and multiple virtual servers/game sessions)
+//the virtual servers/game sessions are done through the class HandleASession

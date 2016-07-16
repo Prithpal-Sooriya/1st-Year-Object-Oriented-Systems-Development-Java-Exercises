@@ -1,0 +1,18 @@
+TicTacToeClient
+===============
+- boolean myTurn //used so to indicate players turn and to prevent them from moving when it is not their turn
+- char myToken //the server will choose for the player if they are an X or an O
+- otherToken //to mark if the other player is an X or an O
+- char[][] cell //3x3 2D char array for the board
+- boolean continueToPlay //if the game has ended or not
+- int rowSelected //the selected row to place X/O on board
+- int columnSelected //the selected column to place X/O on board
+- dataInputStream fromServer //data to be retrieved from the server
+- dataOutputStream toServer //data to be sent to the server
+- boolean waiting //to show that the player is waiting for the other player to finish their turn
+===============
++ void run() //run method to run socket and client GUI
+- void connectToServer() //method to establish a connection to the server
+- void recieveMove() //recieve the opponent move from the server
+- void recieveInfoFromServer() //to retrieve any information sent from the server (such as who won, continue with game, ect)
+- void waitForPlayerAction() //method to wait for the opponents action (so this client cannot do an action in the meanwhile)

@@ -1,0 +1,12 @@
+Case study: Distributed Tic-Tac-Toe game
+
+This is going to be fun to make!!!
+
+The Idea is to make a packman game with:
+    --> 2 clients (the 2 players)
+    --> and 1 server
+
+However The idea of this is also to allow multiple servers to be created (through threads)
+    --> so to have multiple games going on several virtual servers
+
+More information will be given in the listing folder
