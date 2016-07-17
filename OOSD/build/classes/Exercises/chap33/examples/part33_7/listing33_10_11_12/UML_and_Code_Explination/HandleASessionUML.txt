@@ -5,10 +5,12 @@ HandleASession
 ====================
 - socket player1 //responsible for handling connection with player1
 - socket player2 //responsible for handling connection with player2
+- DataInputStream fromPlayer1, fromPlayer2 //retrieve data from clients
+- DataOutputStream toPlayer1, toPlayer2 //send data to clients
 - char[][] cell //3x3 2d char array, to indicate positions already taken, and open positions
 - boolean continueToPlay //this is for the while loop (to loop through each players turns) until turned false, then while loop ends
 ====================
 + void run()
-- boolean isWon()
+- boolean isWon(char playerToken) //returns true if the player has won
 - isFull() //check if char[][] cell is full
 - void sendMove(DataOutputStream out, int row, int column) //send the move made (player1 or player2) to clients

@@ -4,3 +4,4 @@ TicTacToeServer
 ===================
 +main(String[] args) //create the server (and multiple virtual servers/game sessions)
 //the virtual servers/game sessions are done through the class HandleASession
++TicTacToeServer() //constuctor so to create a JFrame (to show client server communications) and networking
