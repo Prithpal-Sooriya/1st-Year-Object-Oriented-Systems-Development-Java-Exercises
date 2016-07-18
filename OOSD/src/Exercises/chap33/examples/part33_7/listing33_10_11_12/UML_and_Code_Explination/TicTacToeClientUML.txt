@@ -13,6 +13,28 @@ TicTacToeClient
 ===============
 + void run() //run method to run socket and client GUI
 - void connectToServer() //method to establish a connection to the server
-- void recieveMove() //recieve the opponent move from the server
+- void recieveMove() //receive the opponent move from the server, will be used inside the receiveInfoFromServer() method
+- void sendMove() //send move to the server
 - void recieveInfoFromServer() //to retrieve any information sent from the server (such as who won, continue with game, ect)
 - void waitForPlayerAction() //method to wait for the opponents action (so this client cannot do an action in the meanwhile)
+
+=========================================
+
+Cell (inner class) extends JPanel
+===============
+int row //will hold the row given given through constructor
+int column //will hold the column given through constructor
+char token //will hold the 'X'||'O'||' '
+===============
++ Cell(int row, int column) //Constructor --> populate the row and column variables with these params
++ char getToken() //return the token in this location
++ void setToken(char token) //set the token in this location
++ void paintComponent(Graphics g) //paint this component
+
+=========================================
+
+ClickListener (inner inner class) extends MouseAdaptor //so we can use mouseClicked
+===============
+//no variables of its own
+===============
++ mouseClicked(MouseEvent e) //override method of MouseAdaptor, to select this cell if unpopulated and send to server
