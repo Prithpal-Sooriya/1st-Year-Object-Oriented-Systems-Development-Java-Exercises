@@ -1,0 +1,13 @@
+Server extends JFrame (GUI for user)
+==============================
+- ServerSocket serverSocket  //on port 8000
+- Socket socket //to connect to client
+- DataInputStream fromClient //get data (probably UTF-8 from client)
+- DataOutputStream toClient //send data to client (probably UTF-8 to client)
+- JTextArea output //output to print to client and server
+- JTextField input //input from client that sends text to the client
+==============================
++Server() //constructor --> set up JFrame
++networking() //set up the connections (serverSocket, socket, fromClient, toClient)
++inputFromClient() //thread to listen for client to send data
++outputToClient() //action listener to send data to client
