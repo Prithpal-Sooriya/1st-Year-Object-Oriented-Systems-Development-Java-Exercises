@@ -1,0 +1,25 @@
+Server extends JFrame //so we can show a log of the communications
+=====================
+-ServerSocket serverSocket //used to create the server
+-ArrayList<Socket> sockets //used to store all the sockets (and can use to count the number of users)
+//DataOutputStream and DataInputStream can be used on the thread to handle each clients
+-JTextArea //to hold the text when data is sent
+============================
++Server() //constructor to create the server, will build GUI and network
++networking() //sort out the Serversocket, will call thread to handle each client
+
+===========================================================
+
+HandleAClient implements Runnable //inner class of Server, Runnable so we can use this for thread
+=====================
+Socket socket //the socket for the client
+DataInputStream fromClient //data retrieved from client
+DataOutputStream toClient //data sent to client
+=====================
++HandleAClient(Socket socket) //constructor to initialise socket
+//override method from Runnable, going to wait till a client sends info, then sends it to all sockets to display
+//we will also send the number of clients connected to the server as well
++run() 
+//once the client message is recieved, the message will be sent to all client
+//may edit this to either send to all clients or all clients apart from the sender
++sendToAll(String clientMessage)

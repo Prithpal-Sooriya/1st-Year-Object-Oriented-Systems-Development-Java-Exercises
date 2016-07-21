@@ -1,0 +1,13 @@
+Client extends JFrame
+========================
+-Socket socket
+-DataInputStream fromServer
+-DataOutputStream toServer
+-JTextArea textArea_output //to output the messages from server and client to screen
+-JTextField textField_input //where the user will type their text to send
+-String host //will be local host, however user can change it if they want to
+===========================
++Client() //constructor to create GUI sort out networking and add actionlistener for user input
++netorking() //method to handle the networking (called inside the constructor)
++inputFromServer() //calls a thread to deal when server sends data (called inside the constructor)
++outputToServer() //adds action listener and sends user input to the server
