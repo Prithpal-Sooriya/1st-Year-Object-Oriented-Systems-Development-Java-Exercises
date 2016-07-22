@@ -32,9 +32,9 @@ public class Server extends JFrame {
     }
 
     //variabes to user
-    ServerSocket serverSocket;
-    ArrayList<Socket> sockets; //will store all the clients created, and be used to display the number of users connected
-    JTextArea log = new JTextArea();
+    private ServerSocket serverSocket;
+    private ArrayList<Socket> sockets; //will store all the clients created, and be used to display the number of users connected
+    private JTextArea log = new JTextArea();
 
     //constructor
     public Server() {
@@ -108,8 +108,8 @@ public class Server extends JFrame {
                     //read the clients message sent
                     //message sent will be in form of <name> : <message>
                     //append the number of users at the start (so Client/other clients can use scanner to retrieve later)
-                    String message = sockets.size() + " " + fromClient.readUTF();
-                    
+                    //String message = sockets.size() + " " + fromClient.readUTF();
+                    String message = fromClient.readUTF();
                     //send the message to all the other clients
                     sendToAll(message);
                 }
@@ -121,7 +121,7 @@ public class Server extends JFrame {
                 int indexOfSocket = sockets.indexOf(socket);
                 try {
                     socket.close();
-                } catch (IOException ex) {
+                } catch (IOException ex) { 
                 }
                 sockets.remove(indexOfSocket);
             }
@@ -135,6 +135,9 @@ public class Server extends JFrame {
             for (Socket socketToSend : sockets) {
                 try {
                     send = new DataOutputStream(socketToSend.getOutputStream());
+                    //send number of users
+                    send.writeInt(sockets.size());
+                    //send the message
                     send.writeUTF(clientMessage);
                     send.close();
                 } catch (IOException ex) {

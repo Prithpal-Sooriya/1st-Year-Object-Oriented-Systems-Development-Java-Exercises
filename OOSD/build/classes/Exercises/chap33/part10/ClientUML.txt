@@ -1,0 +1,20 @@
+Client extends JApplet (so this could be embedded onto a web page if needed)
+==========================
+-Socket socket; //to create a connection with the client
+-DataInputStream fromServer //retrieve data from server
+-DataOutputStream toServer //send data to server
+-JTextField textField_inputFromUser //where the user will input their text
+-JTextField textField_username //where the user can input their name
+-JTextArea textArea_chat //where the chat will be stored
+-JLabel labelNumberOfUsersConnected //shows the number of users connected
+-String host //store the host of server (test will be on "localhost")
+-boolean isStandAlone //used to check if this application is stand alone (so use localhost) or not (so use the IPAddress of where server is)
+============================
+//override method from JApplet, so we can:
+//  -->create the GUI;
+//  -->thread for checking server sending data;
+//  -->action listener for sending user input to the server (which sends to all other clients)
++init()
+-createGUI() //creates the GUI and stored in the applet
+-networking() //where sockets will be initialised and Thread to check for server sending information
+-userInput() //where the action listener will be stored and used for user input
