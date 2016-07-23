@@ -33,7 +33,8 @@ public class Server extends JFrame {
 
     //variabes to user
     private ServerSocket serverSocket;
-    private ArrayList<Socket> sockets; //will store all the clients created, and be used to display the number of users connected
+    //DONT FORGET TO INITIALISE THE ARRAYLIST OF SOCKETS (this is where the issue was... whooops :P)
+    private ArrayList<Socket> sockets = new ArrayList<>(); //will store all the clients created, and be used to display the number of users connected
     private JTextArea log = new JTextArea();
 
     //constructor
@@ -66,7 +67,10 @@ public class Server extends JFrame {
                 //wait till a client wants to connect
                 Socket socket = serverSocket.accept();
 
-                //add the socket onto the ArrayList
+//                //add the socket onto the ArrayList
+//                if(socket == null){
+//                    log.append("Socket is null!!\n");
+//                }
                 sockets.add(socket);
 
                 //run a thread for this client (for communication)
@@ -75,6 +79,8 @@ public class Server extends JFrame {
                 //DONT FORGET TO START THE THREAD
                 thread.start();
 
+                //sleep for some time so to not use up too much processing power
+                //Thread.sleep(100);
             }
         } catch (IOException ex) {
             log.append("Server could not be created\n");
@@ -100,8 +106,13 @@ public class Server extends JFrame {
         @Override
         public void run() {
             try {
-                //first send the client the number of users connected
-                toClient.writeInt(sockets.size());
+                //initialise the Data input and output streams
+                fromClient = new DataInputStream(socket.getInputStream());
+                toClient = new DataOutputStream(socket.getOutputStream());
+
+                //first send all the clients the number of users
+                //--> use sentToAll("") to send the message to all available clients
+                sendToAll("");
 
                 //infinite while loop to read this clients input, then will send input to all users
                 while (true) {
@@ -114,18 +125,20 @@ public class Server extends JFrame {
                     sendToAll(message);
                 }
 
-            } catch (IOException ex1) { //thrown when fromClient.readInt fails (due to when client disconnects PROPERLY
+            } catch (IOException ex) { //thrown when fromClient.readInt fails (due to when client disconnects PROPERLY
                 //if the infinite while loop ends, that means client has disconnected (need to remove the client)
                 log.append("Client from socket(" + socket.getInetAddress().getHostAddress() + ", " + socket.getPort() + ") disconnected\n");
+                System.err.println(ex);
                 //remove the socket from the arraylist
                 int indexOfSocket = sockets.indexOf(socket);
                 try {
                     socket.close();
-                } catch (IOException ex) { 
+                } catch (IOException ex1) {
                 }
                 sockets.remove(indexOfSocket);
+                //since the socket is now removed send all the clients the new number of users connected
+                sendToAll("");
             }
-
         }
 
         //method sendToAll(String clientMessage)
@@ -139,7 +152,7 @@ public class Server extends JFrame {
                     send.writeInt(sockets.size());
                     //send the message
                     send.writeUTF(clientMessage);
-                    send.close();
+                    //send.close();
                 } catch (IOException ex) {
                     log.append("Could not send message from: " + socket.getInetAddress().getHostAddress() + ", " + socket.getPort() + "\n");
                     System.err.println(ex);

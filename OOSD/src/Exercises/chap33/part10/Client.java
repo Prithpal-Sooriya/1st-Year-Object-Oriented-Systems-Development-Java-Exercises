@@ -5,14 +5,19 @@
  */
 package Exercises.chap33.part10;
 
+import java.applet.Applet;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JApplet;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -98,6 +103,9 @@ public class Client extends JApplet {
                     //check if the Socket and DataOutputStream has been initialised
                     if (socket == null || toServer == null) {
                         textArea_chat.append("MESSAGE NOT SEND: CONNECTION NOT ESTABLISHED\n");
+                    } else if (Integer.parseInt(label_numberOfUsersConnected.getText()) == 1) {
+                        //only 1 client connected to the server, cant send message
+                        textArea_chat.append("MESSAGE NOT SEND: NOONE ELSE IS CONNECTED\n");
                     } else { //able to send message
 
                         //create StringBuilder to build onto the string
@@ -110,11 +118,15 @@ public class Client extends JApplet {
                         //now append the message and send the message through the server
                         sb.append(": ");
                         sb.append(textField_inputFromUser.getText());
+                        sb.append("\n"); //add the new line at the end
 
                         toServer.writeUTF(sb.toString());
                     }
                 } catch (IOException ex) {
                     System.err.println(ex);
+                } finally {
+                    //clear the text inside the JTextField Input
+                    textField_inputFromUser.setText("");
                 }
             }
         });
@@ -139,16 +151,13 @@ public class Client extends JApplet {
                     //try and catch exceptions
                     //catch IOException due to streams
                     try {
-                        //first thing server sends is the amount of users connected to the server
-                        label_numberOfUsersConnected.setText("" + fromServer.readInt());
-                        
                         //infinite while loop to wait for user input
                         while (true) {
                             //first server sends the number of users
                             label_numberOfUsersConnected.setText("" + fromServer.readInt());
 
                             //next the server sends the message
-                            textArea_chat.append(fromServer.readUTF() + "\n");
+                            textArea_chat.append(fromServer.readUTF());
                         }
                     } catch (IOException ex) {
                         textArea_chat.append("COULD NOT READ MESSAGE SENT\n");
@@ -168,7 +177,7 @@ public class Client extends JApplet {
     //main method to run code
     public static void main(String[] args) {
         //create an instance of the applet
-        Client applet = new Client();
+        final Client applet = new Client();
         applet.isStandAlone = true; //stand alone application so is true
         //get the host
         if (args.length == 1) {
@@ -191,5 +200,20 @@ public class Client extends JApplet {
         frame.setSize(500, 500);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
+
+        //code for when the window is closing
+        frame.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent we) {
+                try {
+                    applet.socket.close();
+                    System.out.println("Socket closed");
+                } catch (IOException ex) {
+                    System.err.println("Socket not closed");
+                    System.err.println(ex);
+                }
+            }
+        });
+
     }
 }
