@@ -1,0 +1,26 @@
+Database system:
+    --> consists of:
+        --> database
+        --> software that stores and manages data in the database
+        --> application programs that enable the user to interact with the database system
+
+Database: 
+    --> just a repository of data that form information
+
+Software (Database Management System/DMBS):
+    --> what you purchase when you want to create a database
+        --> MySQL; Oracle; Microsoft SQL server; Sybase; NoSQL
+
+    --> DBMS designed for use by professional programmers (not for clients/users)
+
+Application programs:
+    --> can be viewed as interfaces (e.g. GUI's) between the database and the users
+        --> application programs may be standalone GUI applications or Web applications
+            --> application programs may access several different databases in the network
+
+Rational Database Systems:
+    --> based on the Relational Data Model
+        --> 3 key components:
+            --> structure = defines the representation of data
+            --> integrity = impose constraints on data
+            --> language = provides means for accessing and manipulating data

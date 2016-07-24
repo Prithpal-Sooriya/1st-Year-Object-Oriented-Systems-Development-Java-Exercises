@@ -1,0 +1,8 @@
+Database systems
+
+Everything (which stores a lot of information, or information that needs to be categorised) is stored in databases
+
+    --> This chapter (especially 34.2 and 34.3) introduces:
+        --> database systems
+        --> SQL language
+        --> and how to develop database applications using Java

@@ -1,0 +1,8 @@
+Relational Model
+    --> built around simple and natural stucture
+
+What is a Relation?
+    --> a relation is a TABLE which consists of NONDUPLICATE ROWS
+        --> tables are easy to understand and use
+    --> a row of a table represents a record = called tupple (relational database theory)
+    --> a column of a table represents the value of a SINGLE ATTRIBUTE of the record = = called attribute (relational database theory)
