@@ -1,0 +1,11 @@
+SQL (Structured Query Language):
+    --> IMPORTANT: PRONOUNCED "SEQUEL"
+
+    --> Is a universal language for accessing relational database systems
+        --> Application programs may allow users to access a database without directly using SQL
+        --> but all applications MUST use SQL to access the database
+
+    --> this section introduces some basic SQL commands (through the command line)
+
+    --> SQL can be used on: MYSQL; Access; and Oracle to demonstrate Java Database programming
+        --> will be installing and using MYSQL throughout this chapter

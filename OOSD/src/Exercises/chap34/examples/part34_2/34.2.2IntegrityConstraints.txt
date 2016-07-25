@@ -1,0 +1,77 @@
+Integrity Constraints:
+    --> impose a condition/s that ALL legal values in a table must satisfy
+
+3 types of constraints:
+    --> domain constraints (intra-relational constraint)
+    --> primary key constraints (intra-relational constraint)
+    --> foreign key constraints (inter-relational constraint)
+
+intra-relational constraint:
+    --> constraint only involves 1 relation
+
+inter-relational constraint:
+    --> constraint involves >1 relation
+
+Domain constraints:
+    --> specify permissable values of the table
+        --> can be specified by standard data-types: integer; boolean; ect
+            --> standard datatype constraints can have BROAD range of values
+            --> additional constraints set as well can NARROW range of values
+                --> example: age range is INTEGER with RANGE 1-100
+        --> can also specify whether an attribute is NULL
+            -->null means no value has been filled/empty; DOES NOT MEAN 0
+==============================================
+Primary Key Constraints:
+    --> To understand Primary keys, understand:
+        --> Super keys
+        --> Keys
+        --> Candidate keys
+    
+    Super Keys:
+        --> set or single attribute that UNIQUELY identifies relation
+            --> no 2 tuples (rows) have the same values on a super key
+                --> example would be ID (like student ID, or National Insurance Number)
+        --> Definition:
+            --> a relation consists of a set of distinct tuples.
+            --> the set of all attributes in the relation forms a super key
+
+    Keys:
+        --> a Key (K) is a minimal super key
+            --> meaning that any proper subset of the key (K) is NOT a super key
+
+    Candidate Keys:
+        --> from the point above (about what is a key):
+            --> a relation can have several keys...
+        --> in this case, each of the keys are called a candidate key
+
+    --> What are primary keys?
+        --> a primary key is one of the candidate keys designated by the database designer
+    
+    --> The primary keys are used to identify tuples in a relation
+        --> StudentID is the primary key of table Student
+        --> CourseID is the primary key of table Course
+==============================================
+Foreign Key Constraints:
+    --> in a relational database, data is related
+        --> Tuples in a relation are related
+        --> Tuples in different relations are related through their common attributes
+            --> these common attributes are Foreign Keys
+    --> A foreign key constraints define the relationships among relations
+
+    -->Definition:
+        --> FK is a Foreign Key in Relation R, That references relation T if it satisfies 2 rules
+            1) The attributes in FK have the SAME DOMAIN as the primary key in T
+            2) A non-null value on FK in R must match a primary key value in T
+            --> Example:
+                --> CourseID is a Foreign Key in table Enrolment that references CourseID in table Course
+                    --> every CourseID value must match CourseID value in table Course
+==============================================
+Enforcing Integrity Constraints
+--> the Database Management System (DBMS) enforces interity constaints and reject operations that would violate them
+    --> example: want to insert new record (1115, "CSCI", 2490, "C++ Programming", 0) onto Course table
+        --> want to insert new record (1115, "CSCI", 2490, "C++ Programming", 0) onto Course table
+        --> however say that there is no attribute (column) for 0, or 1115 doesnt exist in a foreign key
+        --> DBMS will report an error and reject the operation
+
+        --> if you were to delete a primary key being used
+        --> DBMS will report an error and reject the operation
