@@ -1,0 +1,23 @@
+Creating a user account on MySQL
+
+You can create a user account on the MySQL Workbench (GUI platform) or command line
+
+Steps for creating a user from the command line
+
+    1) mysql -uroot -p //command line
+        --> will be prompted to enter the root password (that I you have set up when configuring MySQL)
+
+    2) use  mysql; //command line
+
+    3) create user 'scott'@'localhost' indentified by 'tiger'; //command line
+        --> this will create a user 'scott' with ip address 'localhost' with password tiger
+
+    4) grant select, insert, update, delete, create, create view, drop, execute, references on *.* to 'scott'@'localhost'; //command line
+        --> grand privileges to user 'scott'
+        --> enable remote access:
+            --> grant all privileges on *.* to  'scott'@'%' identified by 'tiger'; //command line
+        --> restrict the accounts remote access to just one particular IP Address:
+            --> grant all privileges on *.* to 'scott'@'ipaddress' identified by 'tiger';
+
+    5) exit; //command line
+        --> exit the MySQL console

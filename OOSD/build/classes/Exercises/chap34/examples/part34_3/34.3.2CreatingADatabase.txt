@@ -1,0 +1,16 @@
+Creating a database
+
+--> example of creating a database called "javabook" from the command line
+
+    1) from command prompt type:
+        mysql -uscott -ptiger //command line (this is to access the user we have just created)
+
+    2) after the prompt (entered into user) type:
+        create database javabook; //command line (this will create the database)
+
+    3) to access the book, type:
+        use javabook; //command line
+
+    4) there are also a script (from Daniel Liang book, in supplement IV.A) which create and initialise tables
+        --> done by using typing:
+        source script.sql; //if the script is called script.sql, this line is implemented once inside a database (e.g: use javabook;)
