@@ -1,3 +1,324 @@
 Research done from::
     --> https://www.youtube.com/watch?v=yPu6qV5byu4
 
+Learn how to use the terminal:
+    --> terminal to use: "MySQL Command line client"
+        --> this will log the user in as root
+
+    --> terminal to use: normal DOS command line
+        --> navigate to the MySQL folder
+            -->"C:\Program Files\MySQL\MySQL Server 5.7\bin"
+        --> then type:
+            --> "mysql -u <USERNAME> -p"
+        --> prompt to enter password to login, then your in as that user
+
+        --> create a command line shortcut by:
+            --> new shortcut of cmd /k cd C:\Program Files\My#SQL\MySQL Server 5.7\bin
+
+
+        --> tips for editing table (or anything)
+            --> ALTER TABLE <table> DROP COLUMN <oclumn> = removes column
+            --> ALTER TABLE <table> ADD COLUMN <column to add> AFTER <existing column>/FIRST
+============================================================================
+
+What to do inside the command line:
+
+    --> "quit" or "\q" will quit the user
+    --> "show databases;" will show all the available databases
+
+    --> commands in MySQL use uppercase letters
+        --> "CREATE DATABASE test1;" creates a database called "test1"
+            --> make sure that the user has the permissions to create a database
+        --> "USE test1;" will allow you to use the database
+            --> will change the database
+        --> "SELECT DATABASE();" will show the database that is being used
+            --> in this case will show "test1"
+        --> "DROP DATABASE IF EXISTS test1;" will destroy the database if it exists
+============================================================================
+
+Create a database storing students; scores; test; subject:
+
+    Create student table
+        --> "CREATE TABLE student(" creates a table student
+            --> "(" so we can put some statements inside the table
+            
+        --> "first_name VARCHAR(30) NOT NULL," attribute first name not null value
+        --> last name not null
+        --> "email VARCHAR(60) NULL," attribute email and can be null
+        --> street not null
+        --> city not null
+        --> phone not null
+        --> "birth_date DATE NOT NULL," attribute with type DATE
+        --> "sex ENUM('M', 'F') NOT NULL," type ENUM of M or F
+        --> "date_entered TIMESTAMP," type TIMESTAMP for current time
+        --> "lunch_cost FLOAT NULL," type FLOAT for decimal values
+        --> "student_id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY));"
+            --> type INT
+            --> UNSIGNED so cant be negative
+            --> AUTO_INCREMENT so increment on each row
+            --> PRIMARY KEY to tell that this is the primary key
+
+ --> "SHOW TABLES;" to show the tables (including the table we have added)
+
+ --> "DESCRIBE student;" to show all the attributes for the table
+
+        --> "INSERT INTO student VALUE" insert a new record into the table
+            --> will indent so to
+            
+            --> "('Bob', 'dave', 'bob.dave@email.com', 'st street', 'city',
+                '0123456789', "2000-11-5", 'M', NOW(), 3.50, NULL);
+                --> enter in attributes
+                --> DATE can be used with '' or "" (so can Strings)
+                --> NOW() gets current time
+                --> last attribute NULL for primary key (so will auto increment itself)
+
+ --> "SELECT * FROM student;" select everything from table student
+====================================================
+    Create table class "CREATE TABLE class("
+        --> name of subject, "name VARCHAR(30) NOT NULL,"
+        --> class_id, "class_id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY);"
+        
+        --> "SHOW TABLES;" to show the table
+
+        --> "INSERT INTO class VALUES" to insert multiple values/records into class
+            ('English', NULL), ('Speech', NULL), ('Literature', NULL),
+            ('Algebra', NULL), ('Geometry', NULL), ('Trigonometry', NULL),
+            ('Calculus', NULL), ('Earth Science', NULL), ('Biology', NULL),
+            ('Chemistry', NULL), ('Physics', NULL), ('History', NULL),
+            ('Art', NULL), ('Gym', NULL);
+
+--> "SHOW TABLES;" to show all the tables created
+--> "DESCRIBE class;" to show attributes
+--> "SELECT * FROM class;" to show records
+==============================================
+    Create table test, "CREATE TABLE test("
+        --> "date DATE NOT NULL," for date of test
+        --> "type ENUM('T', 'Q') NOT NULL" for test or quiz
+        --> "class_id INT UNSIGNED NOT NULL"  foreign key to access class
+        --> test_id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY);" primary key
+
+--> "SHOW TABLES;" to show attributes
+--> "DESCRIBE test;" to show attributes
+====================================================
+    Create table score, "CREATE TABLE score("
+        --> student_id INT UNSIGNED NOT NULL (foreign key from table student)
+        --> event_id INT UNSIGNED NOT NULL (foreign key from table test)
+        --> score INT NOT NULL
+        --> PRIMARY KEY(event_id, student_id));
+            --> Combine event and student ID so to prevent duplicates (3BNF I think its called)
+
+--> "SHOW TABLES;" to show attributes
+--> "DESCRIBE score;" to show attributes
+====================================================
+    Create table absence, "CREATE TABLE absence("
+        --> student_id INT UNSIGNED NOT NULL
+        --> date DATE NOT NULL
+        --> PRIMARY KEY(student_id, date));, these 2 keys together are unique so can become a primary key
+
+--> "SHOW TABLES;" to show attributes
+--> "DESCRIBE score;" to show attributes
+====================================================
+ALTER TABLE test = alter the attributes inside table
+    --> ALTER TABLE test
+        --> ADD maxscore INT NOT NULL (add the new attribute)
+        --> AFTER type; (so the new attribute is after column type)
+====================================================
+Add data into test table
+INSERT INTO test VALUES (insert multiple values)
+    --> ('2014-8-25', 'Q', 15, 1, NULL),
+        ('2014-8-27', 'Q', 15, 1, NULL),
+        ('2014-8-29', 'T', 30, 1, NULL),
+        ('2014-8-29', 'T', 30, 2, NULL),
+        ('2014-8-27', 'Q', 15, 4, NULL),
+        ('2014-8-29', 'T', 30, 4, NULL);
+
+--> "SELECT * FROM test;" to show records
+====================================================
+change the name of a column of table score
+
+    --> ALTER TABLE score CHANGE event_id test_id
+        --> change name from event_id to test_id (and define data type)
+    --> INT UNSIGNED NOT NULL
+
+    --> DESCRIBE SCORE; //see the changes
+====================================================
+enter score data/values
+    --> INSERT INTO score VALUES
+        -->(1, 1, 15),
+        (1, 2, 14),
+        (1, 3, 28),
+        (1, 4, 29),
+        (1, 5, 15),
+        (1, 6, 27),
+        (2, 1, 15),
+        (2, 2, 14),
+        (2, 3, 26),
+        (2, 4, 28),
+        (2, 5, 14),
+        (2, 6, 26),
+        (3, 1, 14),
+        (3, 2, 14),
+        (3, 3, 26),
+        (3, 4, 26),
+        (3, 5, 13),
+        (3, 6, 26),
+        (4, 1, 15),
+        (4, 2, 14),
+        (4, 3, 27),
+        (4, 4, 27),
+        (4, 5, 15),
+        (4, 6, 27),
+        (5, 1, 14),
+        (5, 2, 13),
+        (5, 3, 26),
+        (5, 4, 27),
+        (5, 5, 13),
+        (5, 6, 27),
+        (6, 1, 13),
+        (6, 2, 13),
+        # Missed this day (6, 3, 24),
+        (6, 4, 26),
+        (6, 5, 13),
+        (6, 6, 26),
+        (7, 1, 13),
+        (7, 2, 13),
+        (7, 3, 25),
+        (7, 4, 27),
+        (7, 5, 13),
+        # Missed this day (7, 6, 27),
+        (8, 1, 14),
+        # Missed this day (8, 2, 13),
+        (8, 3, 26),
+        (8, 4, 23),
+        (8, 5, 12),
+        (8, 6, 24),
+        (9, 1, 15),
+        (9, 2, 13),
+        (9, 3, 28),
+        (9, 4, 27),
+        (9, 5, 14),
+        (9, 6, 27),
+        (10, 1, 15),
+        (10, 2, 13),
+        (10, 3, 26),
+        (10, 4, 27),
+        (10, 5, 12),
+        (10, 6, 22);
+
+        -->"# Missed this day (7, 6, 27),"
+            --> this is how you put comments (mulitline comments)
+
+--> "SELECT * FROM score;" to show records
+===========================================
+insert values into absence
+
+--> DESCRIBE absence;
+    --> good to do this first to get an idea of how the data should be inputted
+
+-->INSERT INTO absence VALUES
+    --> (6, '2014-08-29'),
+        (7, '2014-08-29'),
+        (8, '2014-08-27');
+
+--> "SELECT * FROM absence;" to show records
+===========================================
+search data in specific columns
+
+--> "SELECT first_name, last_name FROM student;! to show records of first and last name
+===========================================
+rename the tables
+
+--> RENAME TABLE
+    --> absence TO absences,
+    --> class TO classes,
+    --> score TO scores,
+    --> student TO students,
+    --> test TO test;
+
+--> SHOW TABLES; //to show the changes
+==========================================
+search data in specific columns AND limit the data inside columns
+
+--> SELECT first_name, last_name, sex
+    --> FROM STUDENTS
+    --> WHERE sex='F'; //so selects all students names and sex, if they are female
+
+--> SELECT first_name, last_name, birth_date
+    --> FROM students
+    --> WHERE YEAR(birth_date) >= 1965; //returns all students name if they are born after or at 1965
+        //Year is an in built method, really handy
+
+--> can do all comparisons
+    --> { <, >, =, <=, >=, != }
+
+--> can also use logical operators
+    --> OR, AND, NOT (can also use the Symbol version: ||, &&, !)
+    --> WHERE MONTH(birth_date) = 2 AND sex = "M";
+=============================================
+check if a value is null
+
+-->SELECT last_name
+    --> FROM students
+    --> WHERE last_name IS NULL;
+    --> WHERE last_name IS NOT NULL;
+==============================================
+decide how data should be ordered
+
+-->SELECT first_name, last_name
+    --> FROM students
+    --> ORDER BY last_name; //so display as ordered by last name
+    --> ORDER BY last_name DESC; //display in reverse alphabetical order
+
+can also combine these:
+-->SELECT first_name, last_name, CITY
+    --> FROM students
+    --> ORDER BY city DESC, last_name ASC; //order city in descending order, and last name in ascending order
+    //city takes priority first
+==============================================
+add limit inn the amount returned
+
+--> SELECT first_name, last_name
+    --> FROM students
+    --> LIMIT 5; //so max 5 students
+
+--> SELECT first_name, last_name
+    --> FROM students
+    --> LIMIT 5, 10; //starting index 5, ending index 10 (so next 5 items)
+==========================================
+Concatenation columns
+
+--> SELECT CONCAT(first_name, " ", last_name) AS "Name",
+    CONCAT(street, " ", city) AS "Hometown"
+    -->FROM students;
+==========================================
+LIKE command get data that fit certain constraints
+
+-->SELECT last_name, first_name
+    --> FROM students
+    --> WHERE first_name LIKE "D%" OR last_name LIKE "%n";
+        //returns students with first name starts with D
+        //returns students with last name ends with n
+
+--> SELECT last_name, first_name
+    --> FROM students
+    --> WHERE first_name LIKE "___y";
+        //more specific, returns 4 character first name that ends in y
+==========================================
+show a record once
+
+--> SELECT DISTINCT MONTH(birth_date)
+    --> FROM students
+    --> ORDER BY birth_date
+==========================================
+count number of times something has appeared
+
+-->SELECT COUNT(DISTINCT sex)
+    --> FROM students; //show 2 distinct genders (male and female)
+-->SELECT COUNT(*)
+    --> FROM students; //shows 11 students
+
+-->SELECT COUNT(*)
+    --> FROM students
+    --> WHERE sex = "M"; //counts number of males in the class
+
+Pick back up from 28:00 (timer on video)
