@@ -312,13 +312,168 @@ show a record once
 ==========================================
 count number of times something has appeared
 
--->SELECT COUNT(DISTINCT sex)
+--> SELECT COUNT(DISTINCT sex)
     --> FROM students; //show 2 distinct genders (male and female)
--->SELECT COUNT(*)
-    --> FROM students; //shows 11 students
+--> SELECT COUNT(*)
+    --> FROM students; //shows total number of students: 11 students
 
--->SELECT COUNT(*)
+--> SELECT COUNT(*)
     --> FROM students
     --> WHERE sex = "M"; //counts number of males in the class
+==============================================
+Group the data
 
-Pick back up from 28:00 (timer on video)
+--> SELECT sex, COUNT(*) //creates 2 columns, sex; and the number of individuals
+    --> FROM students
+    --> GROUP BY sex; //outputs M or F and shows the number of males and females in table
+
+--> SELECT MONTH(birth_date) AS 'Month', COUNT(*) //2 COLUMNS: Month and total number (second column allows use to count all items)
+    //AS method allows to change the column name
+    --> FROM students
+    --> GROUP BY Month //references the month column created (where we change the name by AS method)
+    --> ORDER BY Month;
+==============================================
+Narrow query results after query has been made
+
+--> Select city, COUNT(city) AS 'Amount'
+    //columns: city; count number students in cities
+    --> FROM students
+    --> GROUP BY city
+    --> HAVING Amount > 1;
+        //HAVING command allows to test each row for amount, and check if they are > 1
+        //IF > 1, then display
+        //'Amount' is referenced by COUNT(city) via AS method
+==============================================
+Math functions
+
+Min
+--> SELECT
+    --> test_id AS 'Test',
+    --> MIN(score) AS min //min function, do not need ""||'' for name
+    --> MAX(score) AS max
+    --> MAX(score) - MIN(score) AS 'range'
+    --> SUM(score) AS total
+    --> AVG(score) AS average
+    
+    --> FROM scores
+    --> GROUP BY test_id;
+
+Other numeric functions
+
+ABS(); DEGREES(); MOD(); SQRT(); SIN(); EXP(); PI() ... many more (just search them when I need them) 
+===============================================
+Combining functions that we have learnt
+
+Want to get the student that was absence from the exam to resit the exam
+--> SELECT student_id, test_id
+    --> FROM scores //from the scores table (contains the student_id and test_id)
+    --> WHERE student_id = 6;
+    //will output all test_id's that the student has completed
+    //student_id: 6 has missed test_id: 3
+
+The student has taken the test so add it into the score table
+--> INSERT INTO scores VALUES (6, 3, 24);
+    //6 = student_id
+    //3 = test_id
+    //24 = score they got in the test
+
+//absence still shows there, so lets remove that absence
+--> DELETE FROM absences
+    --> WHERE student_id = 6;
+===============================================
+insert modify and remove columns/attributes
+
+add a column (T/F) for if they have taken the test or not
+--> ALTER TABLE absences
+    --> ADD COLUMN test_taken CHAR(1) NOT NULL DEFAULT 'F'
+        //adds column "test_taken" of 1 char length, with default value of 'F' (cannot be left null)
+    --> AFTER student_id;
+        //inserts column after student_id
+
+--> DESCRIBE absences;
+    //show the attributes for the table
+
+oooooooooops we do not want 'T'/'F' lets change it to use ENUM instead
+--> ALTER TABLE absences
+    --> MODIFY COLUMN test_taken ENUM('T', 'F') NOT NULL DEFAULT 'F';
+
+//lol, don't be stupid, we don't even need this column..
+--> ALTER TABLE absences
+    --> DROP COLUMN test_taken;
+=============================================
+update values inside table
+
+show student_id = 4 from table scores
+--> SELECT * FROM scores
+    --> WHERE student_id = 4;
+
+update a score, say the score was entered incorrectly
+--> UPDATE scores SET score = 25
+    //UPDATE method allows to change the value
+    --> WHERE student_id = 4 AND test_id = 3;
+        //gets the score that will be changed to 25
+        //to get the unique paper for that student...
+        //...set condition to get students id AND tests id
+        //...so changes score on student 4 on test 3
+=============================================
+BETWEEN command
+
+//finds matches between the minimum and maximum
+--> SELECT first_name, last_name, birth_date
+    --> FROM students
+    --> WHERE birth_date
+        --> BETWEEN '1960-1-1' AND '1970-1-1';
+            //returns table of students with birth dates between 1960-1970
+=============================================
+IN command
+
+//finds matches based off of a list
+--> SELECT first_name, last_name
+    --> FROM students
+    --> WHERE first_name IN ('Bobby', 'Lucy', 'Andy');
+        //searches to see if first name is in the list
+        //(bobby, lucy or andy)
+        //if matches then outputs the name
+=============================================
+Joining data together
+
+JOIN method
+//Joining data from 2 different tables
+//matches common data
+--> SELECT student_id, date, score, maxscore
+    //this data comes from 2 different tables
+    --> FROM test, scores
+    --> WHERE date = '2014-08-25' //limit search to these tests of this particular date
+    //now decide how these 2 tables are going to join together
+    //need to match common data they both have
+        //which is test_id
+        --> AND tests.test_id = scores.test_id;
+
+//Better to use precede data you want with tables names
+//prevent errors and confusion
+--> SELECT scores.student_id, tests.date, scores.score, tests.maxscore
+    --> FROM tests, scores
+    --> WHERE date = '2014-08-25'
+    --> AND tests.test_id = scores.test_id;
+
+//how to join 3 tables
+--> SELECT CONCAT(students.first_name, " ", students.last_name) AS Name,
+--> tests.date, scores.score, tests.maxscore
+    --> FROM tests, scores, students
+    --> WHERE date = '2014-08-25'
+    --> AND tests.test_id = scores.test_id
+    --> AND scores.student_id = students.student_id;
+    //just add another condition if there is a matching attribute to use
+=============================================
+other stuff
+
+list all absences from student
+--> SELECT students.first_name,
+    --> students.last_name,
+    --> scores.test_id,
+    --> scores.score
+    --> FROM students
+    --> INNER JOIN scores
+    --> ON students.student_id=scores.student_id
+    --> WHERE scores.score <= 15
+    --> ORDER BY scores.test_id;
