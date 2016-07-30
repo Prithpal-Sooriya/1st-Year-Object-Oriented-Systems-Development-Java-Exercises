@@ -1,1 +1,0 @@
-exercises.chap2.part19.Geometry_DistanceOfTwoPoints

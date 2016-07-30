@@ -1,0 +1,26 @@
+
+Quit/log out user
+--> \q
+    OR
+--> quit
+
+Show databases (that are available to the user logged in)
+    --> SHOW DATABASES;
+
+Create a database
+    --> CREATE DATABASE <name of the database you want to create>;
+
+Use the database (so to use commands on tables and other stuff)
+    --> USE <database name to use>;
+
+Show the database that you are currently using
+    --> SELECT DATABASE();
+
+Get out of the database that you are in
+    --> don't know the specific but you can log out on sign back in
+    --> \q
+    --> mysql -u <username> -p
+
+Delete a database if the database exists
+    --> DROP DATABASE IF EXISTS <the database name>;
+

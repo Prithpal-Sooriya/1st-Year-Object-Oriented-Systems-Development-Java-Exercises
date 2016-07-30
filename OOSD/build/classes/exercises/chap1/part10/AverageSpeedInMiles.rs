@@ -1,1 +1,0 @@
-exercises.chap1.part10.AverageSpeedInMiles

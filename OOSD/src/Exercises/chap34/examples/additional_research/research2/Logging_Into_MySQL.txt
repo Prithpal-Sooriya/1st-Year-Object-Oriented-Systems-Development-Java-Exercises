@@ -1,0 +1,9 @@
+Logging into MySQL database
+
+1)
+--> mysql -u <enter username> -p <press enter>
+    OR
+--> mysql5 -u <enter username> -p <press enter>
+
+2)
+--> enter the password for the username

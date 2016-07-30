@@ -1,1 +1,0 @@
-exercises.chap2.part27.FinancialApplication_SimpleInterest

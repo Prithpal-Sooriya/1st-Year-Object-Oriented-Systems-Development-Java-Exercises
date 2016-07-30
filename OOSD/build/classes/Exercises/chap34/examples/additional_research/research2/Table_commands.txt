@@ -1,0 +1,6 @@
+
+Show tables
+    --> SHOW TABLES;
+
+Show the columns/attributes for the table selected
+    --> 

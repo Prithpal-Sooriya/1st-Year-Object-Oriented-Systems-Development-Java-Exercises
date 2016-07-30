@@ -1,1 +1,0 @@
-exercises.chap3.Exercise2_multiply3Numbers

@@ -1,1 +1,0 @@
-exercises.chap2.part20.FinancialApplication_CalculateInterest
