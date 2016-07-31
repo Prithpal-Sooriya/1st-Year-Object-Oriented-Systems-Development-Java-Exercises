@@ -1,0 +1,19 @@
+
+Math functions
+
+    --> SELECT
+        --> test_id AS 'Test',
+        --> MIN(score) AS min //min function, do not need ""||'' for name
+        --> MAX(score) AS max
+        --> MAX(score) - MIN(score) AS 'range'
+        --> SUM(score) AS total
+        --> AVG(score) AS average
+
+        --> FROM scores
+        --> GROUP BY test_id;
+            //groups all the scores (from score column) of each test_id
+            //then performs the math functions from the set given by group
+
+    Other numeric functions
+
+    ABS(); DEGREES(); MOD(); SQRT(); SIN(); EXP(); PI() ... many more (just search them when I need them) 

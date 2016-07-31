@@ -3,4 +3,59 @@ Show tables
     --> SHOW TABLES;
 
 Show the columns/attributes for the table selected
-    --> 
+    --> DESCRIBE <name of table to look at>;
+
+Create a table
+    --> CREATE TABLE <name of table>(
+        //"(" so we can add the columns and attributes
+        /*
+            attributes style:
+            <column_name> <datatype> <other commands>
+            ==============
+            datatype:
+            VARCHAR(<NUMBER>) = Variable length string giving max length
+            CHAR(<NUMBER>) = fixed length string (has to be length given)
+            INT = number
+            ENUM(<chars>) = enum, so input has to match one of the objects in set
+                            E.G: ENUM('M', 'F') = can only by 'M' or 'F'
+            DATE = gives date input
+            TIMESTAMP = gives timestamp input
+            FLOAT = decimal value
+            ==============
+            other commands
+            NOT NULL = input to table cannot be NULL
+            NULL = input to table can be NULL
+            UNSIGNED = cannot be negative number
+            AUTO_INCREMENT = automatically increments value
+            PRIMARY KEY = declares this column as a primary key
+            
+        */
+        --> E.G. student_id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY);
+            //END COMMAND WITH ";"
+
+insert data into a table
+    --> INSERT INTO <table name> VALUE( = only allow 1 value input
+    OR
+    --> INSERT INTO <table name> VALUE( = allow multiple inputs
+    //make sure to insert all values in same way columns are
+    --> E.G. ('Bob', 'dave', 'bob.dave@email.com', 'st street', 'city',
+                '0123456789', "2000-11-5", 'M', NOW(), 3.50, NULL);
+
+    ////END COMMAND WITH ");" OR ";"
+
+show all the inserted data in a table
+    --> SELECT * FROM <table name>;
+
+Rename a table
+    --> RENAME TABLE <current table name> TO <new table name>
+
+
+add a column into a table
+     --> ALTER TABLE <table> ADD COLUMN <column to add>;
+        --> can use:
+            --> FIRST; = insert column in the front (first column)
+            --> AFTER <existing column>; = insert column after an existing column
+            --> BEFORE <existing column>; = insert column before an existing column
+
+remove a column
+    --> ALTER TABLE <table> DROP COLUMN <column name>;

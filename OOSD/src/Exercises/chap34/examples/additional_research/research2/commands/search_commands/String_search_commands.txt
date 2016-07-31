@@ -1,0 +1,20 @@
+
+Concatenation columns
+    --> SELECT CONCAT(first_name, " ", last_name) AS "Name",
+        // AS "Name" is like declaring a variable
+        // so if want to use this for condition, use variable name
+        --> FROM <table name>;
+
+Search for specific start and end words in string (simple matching patterns)
+    //select words that start with a character or ends with a character
+    -->SELECT last_name, first_name
+        --> FROM students
+        --> WHERE first_name LIKE "D%" OR last_name LIKE "%n";
+            //returns students with first name starts with D
+            //returns students with last name ends with n
+
+Search for specific number of characters (with a possible end character)
+    --> SELECT last_name, first_name
+        --> FROM students
+        --> WHERE first_name LIKE "___y"; //4 underlines
+            //more specific, returns 4 character first name that ends in y

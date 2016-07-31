@@ -1,0 +1,59 @@
+
+What is joining?
+    --> this is where we can access data from 2 tables at the same time (very powerful tool)
+    --> use this to reference the different joins
+        -->http://stackoverflow.com/questions/6294778/mysql-quick-breakdown-of-the-types-of-joins
+
+Join 2 tables together
+    //Joining data from 2 different tables
+    //matches common data
+    --> SELECT student_id, date, score, maxscore
+        //this data comes from 2 different tables
+        --> FROM test, scores
+        --> WHERE date = '2014-08-25' //limit search to these tests of this particular date
+        //now decide how these 2 tables are going to join together
+        //need to match common data they both have
+            //which is test_id
+            --> AND tests.test_id = scores.test_id;
+
+    //Better to use precede data you want with tables names
+    //prevent errors and confusion
+    --> SELECT scores.student_id, tests.date, scores.score, tests.maxscore
+        --> FROM tests, scores
+        --> WHERE date = '2014-08-25'
+        --> AND tests.test_id = scores.test_id;
+
+
+Join 2+ tables together
+    //how to join 3 tables
+    --> SELECT CONCAT(students.first_name, " ", students.last_name) AS Name,
+    --> tests.date, scores.score, tests.maxscore
+        --> FROM tests, scores, students
+        --> WHERE date = '2014-08-25'
+        --> AND tests.test_id = scores.test_id
+        --> AND scores.student_id = students.student_id;
+        //just add another condition if there is a matching attribute to use
+
+LEFT JOIN
+    --> SELECT students.student_id,
+        --> CONCAT(students.first_name, " ", students.last_name) AS Name,
+        --> COUNT(absences.date) AS Absences
+        --> FROM students LEFT JOIN absences
+        --> ON students.student_id = absences.student_id
+        --> GROUP BY students.student_id;
+    //left join = get all contents of A
+    //we can get all info FROM students, and if absences table does not exist then it won't matter
+
+INNER JOIN
+    --> SELECT students.first_name,
+        --> students.last_name,
+        --> scores.test_id,
+        --> scores.score
+        --> FROM students
+        --> INNER JOIN scores
+        --> ON students.student_id=scores.student_i
+        --> WHERE scores.score <= 1
+        --> ORDER BY scores.test_id;
+    //inner join = A intersection B (get data that correlates from A and B)
+    //gets all rows of data from both tables if there is a match between the columns
+

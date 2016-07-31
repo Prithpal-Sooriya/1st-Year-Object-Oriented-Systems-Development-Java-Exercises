@@ -1,0 +1,47 @@
+
+NOTE = when searching, it will also display resulting table to the screen
+
+search through whole table (to display all contents)
+    --> SELECT * FROM <table name>;
+
+search specific columns (will show all records/results of the columns selected)
+    --> SELECT <column name>, <other column names>
+        --> FROM <table name>
+    
+search specific column with constraint
+    --> SELECT <column name>, <other column names>
+        --> FROM <table name>
+        --> WHERE (conditions/constraints)
+            --> can do all comparisons
+                --> { <, >, =, <=, >=, != }
+            --> can also use logical operators
+                 --> OR, AND, NOT (can also use the Symbol version: ||, &&, !)
+
+            --> e.g. WHERE sex='F';
+            --> e.g. WHERE YEAR(birth_date) >= 1965;
+            --> e.g. WHERE MONTH(birth_date) = 2 AND sex = "M";
+
+search specific column is null (or not null)
+        -->SELECT <column name (reference as x)>
+            --> FROM <table name>
+            --> WHERE <that column name x> IS NULL;
+            OR
+            --> WHERE <that column name x> IS NOT NULL;
+
+order output (ascending or descending)
+    -->SELECT x, y
+        --> FROM <table name>
+        --> ORDER BY x; //so display as ordered by last name, default (ASC)
+        --> ORDER BY last_name DESC; //display in reverse alphabetical order
+
+    //can combine the ascending and descending
+    -->SELECT x, y, z
+        --> FROM <table name>
+        --> ORDER BY z DESC, y ASC; //first one gets precedence, so z descending comes first
+
+limit output
+    -->SELECT x, y
+        --> FROM <table name>
+        --> LIMIT 5; //so max 5 students
+        OR
+        --> LIMIT 5, 10; //starting index 5, ending index 10 (so next 5 items)
