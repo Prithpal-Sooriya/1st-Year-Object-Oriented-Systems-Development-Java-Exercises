@@ -1,0 +1,66 @@
+lesson 1 part 1: how to write a basic SQL select statement
+
+"-->" = indenting, information, and instructions
+"*" = output
+
+Schemas = databases
+    --> will hold the tables, views, procedures and functions (routines)
+=================
+Information tab
+    --> Clicking on a table will show all the columns (attributes) in the "information tab" 
+        --> underlined attribute = primary key
+=================
+First Query
+    --> query window should be open
+        --> if not just click "file --> new query tab"
+    --> right mouse click on a table
+        --> click select rows - limit 1000 (limit useful if you have a stupidly large table
+            --> this creates a very simple SELECT statement
+                --> SELECT * FROM <table name> LIMIT 1000; //explicitly say to return max of 1000
+            * This will create a table output to see the information from the query
+            * output tab = action completed (green tick), and shows the number of rows returned
+=================
+Edit Query
+    --> edit query "SELECT * FROM financial.security_transactions" to "SELECT * FROM financial.security_transactions LIMIT 10"
+
+    --> THEN PRESS THE LIGHTNING SYMBOL (will rerun query)
+        --> this will return 10 rows of data        
+=================
+Best way to format SQL code/queries
+    --> 1 line of query is usually fine...
+    --> ... but larger queries need to be formatted
+
+    --> Formatting code is easily done by pressing the broom button (will beautify the code!)
+    --> e.g. shown below. This can be changed if other sections need to be added
+
+SELECT //first section of code for columns
+    <column name 1>,
+    <column name 2>,
+    ...,
+    <column name n> //no comma here
+FROM //second section of code for tables
+    <table name 1>,
+    ...,
+    <table name n>
+LIMIT 50 //third section for commands
+=================
+Order a table
+    --> of course you can call the ORDER BY method...
+    --> ...but the table/spreadsheet created can be used to order data from specific column
+        --> press one of the columns names above (not the data>
+        * the table/spreadsheet is ordered by that column
+=================
+Query with specific columns
+    --> just change SELECT * ..., to SELECT <column names>
+    --> e.g.
+
+SELECT 
+    transdate,
+    description,
+    symbol,
+    quantity
+FROM
+    financial.security_transactions
+LIMIT 1000;
+
+    *shows table with columns given (in the order they were written)

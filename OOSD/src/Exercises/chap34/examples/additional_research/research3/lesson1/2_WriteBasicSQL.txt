@@ -1,0 +1,4 @@
+Save a query off to a file
+    1 click the save icon (you know, the floppy disk)
+    2 name the file, and store in a location
+    
