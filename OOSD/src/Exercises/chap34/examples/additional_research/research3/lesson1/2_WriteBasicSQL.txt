@@ -1,4 +1,24 @@
 Save a query off to a file
-    1 click the save icon (you know, the floppy disk)
-    2 name the file, and store in a location
-    
+    1) click the save icon (you know, the floppy disk)
+    2) name the file, and store in a location
+===========================
+Troubleshooting problems
+    --> if you make an error in the SQL script
+        --> important to diagnose and fix the problems
+
+    --> when there is a problem
+        1) the spreadsheet/table will disappear
+        2) output pane: shows red cross
+            --> gives error code
+            --> e.g. pric instead of price
+                --> and indicates the name error in the field list
+            --> e.g. "price," when there should not be a comma
+                --> "error in SQL syntax..." not very helpfull
+                --> however in the code pane, where the red cross is
+                    --> indicates the error is there or above
+
+    --> no problem/successful query = returns the number of rows returned
+===========================
+Create alias name for column
+    --> the AS command
+        --> <column> AS "desired name"

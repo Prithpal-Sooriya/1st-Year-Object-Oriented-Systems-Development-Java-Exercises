@@ -2,7 +2,8 @@ SELECT
     transdate,
     description,
     symbol,
-    quantity
+    quantity,
+    price AS 'PPS'
 FROM
     financial.security_transactions
 LIMIT 1000;

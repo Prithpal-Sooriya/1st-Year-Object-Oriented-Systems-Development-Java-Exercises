@@ -1,0 +1,5 @@
+--> count(data) counts the data
+    --> count(*) returns all the data in all the columns
+
+--> DISTINCT means no copies, so none of the same
+    --> DISTINCT <column> = returns all the rows with none of the same column
