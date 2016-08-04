@@ -1,0 +1,44 @@
+Creating a table (in command line)
+
+--> once inside the database:
+
+//NOTE: comments made in sql scripts are: # at start; -- at start; /* in between */
+
+CREATE TABLE Course(
+    courseID CHAR(5),
+    subjectID CHAR(4) NOT NULL,
+    courseNumber INTEGER,
+    title VARCHAR(50) NOT NULL,
+    numOfCredits INTEGER,
+    PRIMARY KEY (courseID)
+    FORIGN KEY (subjectId) REFERENCES Subject(subjectID
+);
+
+CREATE TABLE Student(
+    ssn CHAR(9),
+    firstName VARCHAR(22),
+    MI CHAR(1),
+    lastName VARCHAR(25),
+    birthDate DATE,
+    street VARCHAR(25),
+    phone CHAR(11),
+    # zipCode CHAR(5), might not need
+    deptID CHAR(4),
+    PRIMARY KEY(ssn)
+);
+
+CREATE TABLE Enrolment(
+    ssn CHAR(5),
+    courseID CHAR(5),
+    dateRegistered DATE,
+    grade CHAR(5),
+    primary key (ssn, courseID)
+    foreign key (ssn) REFERENCES Student(ssn),
+    foreign key (courseID) REFERENCES Course(courseID)
+====================================
+dropping tables
+
+-->dropping tables = deleting tables
+--> to drop tables just use:
+
+DROP TABLE <table name>;

@@ -1,0 +1,12 @@
+Insert data into tables
+    --> follows the code format:
+
+INSERT INTO <table name> VALUES (
+    <value 1> <insert in the way columns are set>,
+    <value 2> <insert in the way columns are set>,
+    <value 3> <insert in the way columns are set>,
+    <value 4> <insert in the way columns are set>,
+...
+    <value 5> <insert in the way columns are set>
+);
+==========================

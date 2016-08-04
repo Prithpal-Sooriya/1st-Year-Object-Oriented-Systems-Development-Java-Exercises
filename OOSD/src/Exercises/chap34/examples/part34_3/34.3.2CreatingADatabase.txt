@@ -14,3 +14,14 @@ Creating a database
     4) there are also a script (from Daniel Liang book, in supplement IV.A) which create and initialise tables
         --> done by using typing:
         source script.sql; //if the script is called script.sql, this line is implemented once inside a database (e.g: use javabook;)
+==================================
+what I have done
+    --> login
+        --> mysql -u <username> -p
+            --> <enter password>
+
+    --> create a database
+        --> CREATE DATABASE javabook;
+    
+    --> get into the database/ use the database
+        --> use <database name>
