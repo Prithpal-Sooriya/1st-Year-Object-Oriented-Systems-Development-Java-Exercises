@@ -9,4 +9,49 @@ INSERT INTO <table name> VALUES (
 ...
     <value 5> <insert in the way columns are set>
 );
+
+    --> you can also insert data into specific columns
+INSERT INTO <table name> (<column name 1>, <column name 2>, ..., <column name n>)
+VALUES (
+    <value 1>,
+    <value 2>,
+    <value 3>,
+    <value 4>,
+..
+    <value 5>
+);
+    
 ==========================
+Update value in a table
+    --> when updating a value, you need to be specific (so only change that one value)
+
+UPDATE <table name>
+    SET <column to change> = <new value that can be accepted into the column>
+    WHERE <condition to make this update data unique>;
+
+e.g.
+
+UPDATE Course
+    SET numOfCredits = 4
+    WHERE title = 'Database Systems';
+
+--this will change all users (or that single user) numOfCredits to 4, if the title is 'Database Systems'
+===========================
+Delete a record from the table
+    --> to delete a record, have to be specific
+
+DELETE <table name>
+    WHERE <condition to make unique>;
+
+e.g. 
+
+DELETE Course
+    WHERE title = 'Database Systems';
+
+    --> to delete all records, just state:
+
+DELETE <TABLE NAME>;
+
+e.g.
+
+DELETE Course;

@@ -7,7 +7,7 @@ USE javabook;
 CREATE TABLE Course (
     courseId CHAR(5),
     subjectId CHAR(4) NOT NULL,
-    courseNumber INTEGER,
+    courseNumber INTEGER, -- accepts e.g. 1234 as well as '1234'
     title VARCHAR(50) NOT NULL,
     numOfCredits INTEGER,
     /*
