@@ -1,4 +1,6 @@
 -- create table student
+use javabook;
+
 CREATE TABLE Student (
     ssn CHAR(9) NOT NULL,
     firstName VARCHAR(25),
@@ -7,7 +9,7 @@ CREATE TABLE Student (
     phone CHAR(11),
     birthDate DATE,
     street VARCHAR(100),
-    postCode CHAR(6),
+    zipCode CHAR(5),
     deptId CHAR(4),
     CONSTRAINT pkStudent PRIMARY KEY (ssn)
     -- cannot add foreign key to deptID yet

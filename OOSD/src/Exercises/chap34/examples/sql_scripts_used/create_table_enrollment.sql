@@ -1,8 +1,9 @@
+use javabook;
 -- create table enrolment
 CREATE TABLE Enrollment (
     ssn CHAR(9) NOT NULL,
     courseId CHAR(5) NOT NULL,
-    dateRegistered DATE,
+    dateRegistered TIMESTAMP,
     grade CHAR(1),
     -- primary key pkenrollment links rows ssn and courseId
     CONSTRAINT pkEnrollment PRIMARY KEY (ssn , courseId),
