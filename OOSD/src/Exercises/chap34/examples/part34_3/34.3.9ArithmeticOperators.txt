@@ -1,0 +1,9 @@
+Arithmetic Operators:
+    --> can use math operators
+        --> addition, subtraction, multiplication, division (+,-,*,/)
+        --> can also do other math functions (MAX, MIN, AVG, RANGE, SIN, COS, TAN, etc)
+    
+    --> e.g.
+SELECT title, 50 * numOfCredits AS "Lecture Minutes Per Week"
+FROM Course
+WHERE subjectId = 'CSCI';

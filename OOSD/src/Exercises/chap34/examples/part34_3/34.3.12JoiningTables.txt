@@ -1,0 +1,21 @@
+Joining Tables
+
+    --> To join 2 tables, the tables must have EQUAL columns to be accessed
+    --> EQUAL: no repeating data in column; unique in the table; data must match in both tables
+    
+    --> e.g.
+SELECT DISTINCT
+    lastName,
+    firstName,
+    courseID
+FROM
+    Student,
+    Enrollment
+WHERE
+    Student.ssn = Enrollment.ssn
+    AND
+    lastName = 'Smith' AND firstName = 'Jacob';
+
+    --> the join is done by using distinct data in the ssn column from both tables
+
+    --> note: joins are like union/intersection/difference/etc from sets
