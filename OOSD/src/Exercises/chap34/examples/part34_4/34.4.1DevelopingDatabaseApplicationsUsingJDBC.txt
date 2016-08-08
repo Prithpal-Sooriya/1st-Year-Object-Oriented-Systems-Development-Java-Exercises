@@ -1,0 +1,61 @@
+Developing Database Applications using JDBC
+
+    -->4 key interfaces needed to develop any database application obtaining database metadata
+        
+        --> Driver = JDBC loads appropriate driver
+        --> Connection = connects to the database
+        --> Statement = creates and executes SQL statements
+        --> ResultSet = process the result
+            --> SQL data definition, SQL data modification, etc do not return results
+
+    --> These define a framework for generic SQL database access
+
+    --> these 4 interfaces make the building blocks for java database development
+    --> here are what the code may look like:
+    
+    1) loading drivers
+        --> appropriate driver must be loaded using the statement shown below before connecting to a database
+            Class.forName("JDBCDriverClass"); //Class replaced by the class to access, driver class replaced with correct database driver class
+
+        --> A driver is a concrete class that implements java.sql.Driver interface
+        --> the drivers for the database access are different
+            Driver class (what is filled in the "" above)
+            --> Access = sun.jdbc.odbc.Jdbc0dbcDriver (already in the JDK)
+            --> MySQL = com.mysql.jdbc.Driver (companion web site)
+            --> Oracle = oracle.jdbc.driver.OracleDriver (companion web site)
+        --> you will have to add the mysqljdbc.jar and ojdbc6.jar in classpath using the Windows DOS command
+            --> set classpath=%classpath%;c:\book\mysqljdbc.jar;c:\book\ojdbc6.jar
+                --> replace c:\book\ with c:\"directory" or the directory of your code
+        OR
+        --> if using an IDE (e.g. Eclipse, Netbeans), need to add these jar files into the library of the IDE
+
+    2) establishing connections
+        --> connect to a database use the getConnection(databaseURL) in DriverManager class
+            Connection connection = DriverManager.getConnection(databaseURL);
+
+        --> DatabaseURL is a unique identifier of the database on the internet.
+        --> URL patterns to expect for the unique identifier for the database
+            --> Access = jdbc:odbc:dataSource
+            --> MySQL = jdbc:mysql://hostname/dbname
+            --> Oracle = jdbc:oracle:thin:@hostname:port#:oracleDBSID
+
+        --> for ODBC (Open Database Connectivity) data source
+            --> DatabaseURL = jdbc:odbc:dataSource
+        --> an ODBC data source can be created using: ODBC Data Source Administrator on Windows
+
+        --> connect to database using Access
+            Connection connection = DriverManager.getConnection("jdbc:odbc:ExampleMDBDataSource");
+
+        --> connect to a database using MySQL
+            Connection connection = DriverManager.getConnection("jdbc:mysql://localhost/databasename", "username", "password");
+        
+        --> connect to a database using Oracle
+            Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@liang.armstrong.edu:1521:orcl", "username", "password");
+
+    3) Creating statements
+        --> using the connection variable instantiated, create a statment
+            Statement statement = connection.createStatment();
+
+    4) Executing statements
+        --> 
+            
