@@ -1,0 +1,53 @@
+
+Show records/rows once (so acts like a set/ no repeats)
+    --> SELECT DISTINCT MONTH(birth_date) //DISTINCT means no repeats
+        --> FROM students
+        --> ORDER BY birth_date
+
+Count the number/amount of something (returns an integer result)
+    --> SELECT COUNT(DISTINCT sex)
+        --> FROM students; //show 2 distinct genders (male and female)
+
+    --> SELECT COUNT(*)
+        --> FROM students; //shows total number of students: 11 students
+
+    --> SELECT COUNT(*)
+        --> FROM students
+        --> WHERE sex = "M"; //counts number of males in the class
+
+Grouping sets
+    //IMPORTANT grouping will only store 1 value for each group
+    --> SELECT sex, COUNT(*)
+        //creates 2 columns, sex; and the number of individuals
+        --> FROM students
+        --> GROUP BY sex;
+            //outputs M or F and shows the number of males and females in table
+            //this is because sex is ENUM which has 2 options
+                //so will group all 'M' and group all 'F'
+
+Narrow query if after a query has been made
+    --> Select city, COUNT(city) AS 'Amount'
+        //columns: city; count number students in cities
+        --> FROM students
+        --> GROUP BY city //no where statement, so query has already been made
+        --> HAVING Amount > 1;
+            //HAVING command allows to test each row for amount, and check if they are > 1
+            //IF > 1, then display
+            //'Amount' is referenced by COUNT(city) via AS method
+
+BETWEEN command
+    //finds matches between the minimum and maximum
+    --> SELECT first_name, last_name, birth_date
+        --> FROM students
+        --> WHERE birth_date
+            --> BETWEEN '1960-1-1' AND '1970-1-1';
+                //returns table of students with birth dates between 1960-1970
+
+IN command
+    //finds matches based off of a list
+    --> SELECT first_name, last_name
+        --> FROM students
+        --> WHERE first_name IN ('Bobby', 'Lucy', 'Andy');
+            //searches to see if first name is in the list
+            //(bobby, lucy or andy)
+            //if matches then outputs the name

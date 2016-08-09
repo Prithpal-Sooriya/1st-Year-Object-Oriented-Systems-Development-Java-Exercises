@@ -1,0 +1,11 @@
+JDBC
+
+    --> not an acronym, but can stand for Java Database Connectivity
+    --> This is the java API for accessing relational databases (not noSQL)
+    
+    --> JDBC uses java to perform:
+        --> execute SQL statements
+        --> retrieve results
+        --> present data in a user friendly interface
+        --> propagate changes back to the database
+        --> used to interact between multiple data sources in a distributed, heterogeneous environment

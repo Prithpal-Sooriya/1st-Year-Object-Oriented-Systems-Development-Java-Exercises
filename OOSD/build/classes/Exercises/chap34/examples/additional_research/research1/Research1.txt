@@ -1,0 +1,70 @@
+Research done from:
+    --> https://www.youtube.com/watch?v=RSHevYMwCVw
+
+Learn how to use MySQL WorkBench:
+
+    --> create a new model
+        --> a model of the database
+        1) click on "file" on the top corner and select new model
+            --> this will create a new model
+
+    --> change database name
+        1) right click and select "edit schema"
+        2) type new name in the name window
+
+    --> creating diagrams
+        --> whatever diagrams created is a diagram for that particular database
+        --> diagrams are not databases, but a way to implement a database
+        1) Double click "Add Diagram" to create the diagram
+
+    --> adding Tables, Views, Routines, Groups
+        --> by adding one of these, this means they can be accessed from the
+            other diagrams as well
+        1) double click on "Add Table/View/Routine/Group" to add one of them
+        2) of course, by highlighting the table you can change the name
+           and other stuff
+
+    1--> first thing you should do when creating a new model is change collation
+        /character set that will be used
+        --> this is located in the schema of the model
+            (same procedure as changing name)
+        --> default UTF-8 is fine
+    
+    2--> next create a new table
+        --> so for example create a table called "users"
+            --> create a new attribute "user_id"
+            --> select datatype to INT
+                --> BIG_INT if dealing with a stupidly large database
+            --> select PK (Primary Key)
+            --> select NN (Not Null, so data has to be give
+            --> select UN (unsigned, so cannot be negative)
+            --> select AI (auto incremental, so increments for each record)
+
+        --> could also create a table called firstname
+            --> datatype VARCHAR(45) for a String length of max 45
+            --> select NN (so name has to be filled in)
+
+        --> do the same last name
+
+    3--> create a table for sales
+        --> holds sale_id (primary key)
+        --> holds user_id (foreign key)
+            --> make sure to tick UN, as primary key is also UN (unsigned)
+            --> to make sure this is a foreign key
+                1) select "foreign keys" tab at the bottom of the table
+                2) type in the foreign key name in the icon shown
+                3) select the table that the foreign key references
+                4) check/tick the box user_id in "Column"
+            --> can also set up foreign key constraints
+                --> such as what happens on update and on delete
+
+    4--> create a diagram
+        --> rename diagram
+            --> right click and rename
+        --> use catalogue tree to import the tables
+            --> just drag and drop
+        --> blue = parent (contains the primary key that is used)
+        --> green = child (as foreign key points to parent)
+        --> the arrow indicate the relationship
+            -->many user_id's in sales to 1 user_id in Users
+        --> can also create new tables inside the diagram

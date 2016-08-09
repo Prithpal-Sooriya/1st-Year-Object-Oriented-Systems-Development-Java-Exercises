@@ -1,0 +1,25 @@
+Other Operators:
+===============
+LIKE operator:
+    --> used for pattern matching, returns true/false if matches or not
+    --> e.g. check if String 's' has a pattern 'p'
+        --> s LIKE p
+        --> s NOT LIKE p
+    --> you can use wild cards
+        --> % matches zero or more characters
+        --> _ matches a SINGLE character for s
+        --> e.g.
+            --> lastName LIKE '_mi%' matches any String with second and third characters "mi"
+            --> lastName NOT LIKE '_mi%' excludes any String whose second and third letters are "mi"
+===============
+BETWEEN-AND operator:
+    --> checks whether a value 'v' is in between two other values 'v1' and 'v2'
+    --> syntax
+        --> v BETWEEN v1 AND v2 --> equivalent to v >= v1; v <= v2
+        --> v NOT BETWEEN v1 AND v2 --> equivalent to v < v1; v > v2
+===============
+IS NULL operator:
+    --> checks whether a value 'v' is null
+    --> syntax
+        --> v IS NULL
+        --> v IS NOT NULL

@@ -1,0 +1,27 @@
+Display Sorted Tuples
+    --> use the ORDER BY keywords
+        --> can order by ASC (ascending)
+        --> can order by DESC (descending)
+        --> default (if you don't choose) is ASC
+
+    --> format
+SELECT <list columns>
+FROM <list tables>
+WHERE <list conditions>
+ORDER BY <columns to be sorted>
+
+    --> if 2 orders are given, 1st order is primary, next order is secondary
+
+    --> e.g.
+SELECT
+    lastName,
+    FirstName,
+    deptId
+FROM
+    Student
+WHERE
+    deptId = 'CS'
+ORDER BY
+    lastName DESC,
+    firstName ASC;
+

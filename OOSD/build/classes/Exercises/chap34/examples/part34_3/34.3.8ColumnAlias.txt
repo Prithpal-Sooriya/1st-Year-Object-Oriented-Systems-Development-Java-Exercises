@@ -1,0 +1,14 @@
+Column Alias:
+
+    --> give a name to the column
+        --> the name will signify what to call the column if needed to be used in a condition
+    --> done by using the AS command
+
+    --> format:
+SELECT <column name> AS 'name want to give'
+
+    --> e.g.
+SELECT
+    CONCAT(firstName, ' ', lastName) AS 'Name'
+FROM
+    Student;

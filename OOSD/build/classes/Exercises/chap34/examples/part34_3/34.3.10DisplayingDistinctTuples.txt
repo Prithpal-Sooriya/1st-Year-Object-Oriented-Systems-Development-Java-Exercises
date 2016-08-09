@@ -1,0 +1,15 @@
+Displaying Distinct Tuples
+    --> use the DISTINCT keyword
+        --> will display the records/tuples which do not repeat from a specific column
+        --> e.g. display all the different subjects by using subjectId
+            --> note to self, you can use DISTINCT on a primary key to display all the values
+                --> as each primary key is distinct
+    
+    --> e.g.
+SELECT DISTINCT subjectId AS 'Subject ID'
+FROM Course;
+
+
+    --> basically DISTINCT removes duplicates of a column
+
+    --> if DISTINCT is called on more than 1 column, then displays distinct tuples/rows

@@ -1,0 +1,32 @@
+Simple Queries:
+    --> done by using SELECT function
+
+format:
+
+SELECT
+    <column name1>,
+    <column name 2>,
+    ...,
+    <column name n>
+FROM
+    <table name1>,
+    <table name2>,
+    ...,
+    <table name n>
+WHERE
+    <conditions that you want to add
+        mathematical conditions
+        logical conditions
+        logical operators
+        string conditions
+        ... etc
+    >;
+
+
+example:
+
+SELECT
+    firstName, mi, lastName
+FROM
+    Student
+WHERE deptId = 'CS';

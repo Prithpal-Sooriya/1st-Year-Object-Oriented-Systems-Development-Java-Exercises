@@ -1,0 +1,26 @@
+
+add a column into a table
+     --> ALTER TABLE <table> ADD COLUMN <column to add>;
+        --> can use:
+            --> FIRST; = insert column in the front (first column)
+            --> AFTER <existing column>; = insert column after an existing column
+            --> BEFORE <existing column>; = insert column before an existing column
+
+remove a column
+    --> ALTER TABLE <table> DROP COLUMN <column name>;
+
+rename a column
+    --> ALTER TABLE <table name> CHANGE <current column name in table> <new column name in table>
+        --> (add in the datatype and other commands)
+        --> e.g. INT UNSIGNED NOT NULL;
+
+modify a column (of its datatypes and commands)
+    --> ALTER TABLE <table name> MODIFY COLUMN <column name>
+        --> (enter the new datatype AND other commands)
+        --> e.g. ENUM('T','F') NOT NULL DEFAULT 'F';
+
+show columns of a table
+    --> DESCRIBE <name of table to look at>;
+
+//CHANGE COLUMN = used to rename column, change datatype, or move it within the schema
+//MODIFY COLUMN = can do EVERYTHING CHANGE COLUMN can, but CANNOT rename column
