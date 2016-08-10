@@ -1,0 +1,9 @@
+Accessing a Database from a java applet
+    --> if you are using a JDBC-ODBC bridge driver, you cannot run program as an applet from a web browser
+        -->  becuase ODBC driver contains non-java native code.
+
+    --> drivers for MySQL and Oracle are written in java and can be run from the JVM in a browser
+    
+    --> Listing34_2 demonstrates connecting a database from a Java Applet
+        --> The applet lets the user enter the SSN and the courseID to find a student's grades
+            --> the MySQL database is used on the local host.

@@ -39,8 +39,9 @@ public class SimpleJDBC {
 
         //connect using MySQL
         //"jdbc:mysql://localhost/database name", "username", "password"
-        Connection connection = DriverManager.getConnection("jdbc:mysql://localhost/javabook", "Prithpal", "psooriya");
+        //Connection connection = DriverManager.getConnection("jdbc:mysql://localhost/javabook", "Prithpal", "psooriya");
         //use "jdbc:mysql://localhost/javabook?autoReconnect=true&useSSL=false" to remove the useSSL warning
+        Connection connection = DriverManager.getConnection("jdbc:mysql://localhost/javabook?useSSL=false", "Prithpal", "psooriya");
         
         //connect using Access
         //Connection connection = DriverManager.getConnection("jdbc:odbc:dataSource");
@@ -70,7 +71,7 @@ public class SimpleJDBC {
         //iterate through the result and print the students names
         while (resultSet.next()) {
             System.out.println(resultSet.getString(1) + "\t" + resultSet.getString(2) + "\t" + resultSet.getString(3));
-            //returns each column as a strign (so all results can be converted into a string output
+            //returns each column as a String (so all results can be converted into a string output)
         }
         
         System.out.println("Result Set Processed!");
