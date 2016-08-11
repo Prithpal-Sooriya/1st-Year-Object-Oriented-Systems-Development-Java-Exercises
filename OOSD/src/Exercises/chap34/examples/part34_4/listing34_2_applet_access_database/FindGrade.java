@@ -75,6 +75,10 @@ public class FindGrade extends JApplet {
 
             //exstablish a connection
             Connection connection = DriverManager.getConnection("jdbc:mysql://localhost/javabook?useSSL=false", "Prithpal", "psooriya");
+            //Connect to a database on web host
+            //Connection connection = DriverManager.getConnection("jdbc:myslq://liang.armstrong.edu:1521/javabook", ...);
+            //connection with mysql is with string "jdbc:mysql://[host]:[port]/database name
+            //host can be anything (IP address, 
             System.out.println("Connection to database made!");
 
             //create a statement

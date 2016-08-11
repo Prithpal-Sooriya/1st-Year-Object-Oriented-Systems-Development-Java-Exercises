@@ -1,0 +1,47 @@
+Prepared Statements
+
+    --> once a connection to a database has been established, it can be used to send SQL statements
+        --> sends statements from program to database
+        --> execute those statements and output (with ResultSet or just output for database to do) will occur
+        
+    --> the Statement interface is used to execute static SQL statements
+        --> that don't contain any parameters
+
+    --> PreparedStatement interface (extends Statement interface)
+        --> used to execute a precompiled SQL statement
+            --> can handle with or without parameters
+        --> Since the SQL statements are precompiled, they are efficient for repeated executions
+
+    --> e.g. code for PreparedStatment for SQL INSERT statement
+Statement preparedStatement = connection.preparedStatment(
+    "INSERT INTO Student (firstName, mi, lastName) VALUES (?, ?, ?)"
+);
+
+    --> PreparedStatment inherits all of Statement methods
+        --> also contains own methods for setting parameters in the object of PreparedStatement 
+            --> methods used to set values for the parameters before executing statements or procedures
+            --> set methods in format of:
+                setX(int parameterIndex, X value)
+                //where X is type of parameter
+                //parameterIndex is index of the parameter in the statement. Index starts at 1
+            --> example of set method
+                setString(int parameterIndex, String value); //sets a string value to a certain parameter
+
+            --> example, pass "jack", "A" "Ryan" to the placeholder's for firstName, mi, lastName
+                --> from the preparedStatement variable created above
+preparedStatement.setString(1, "Jack");
+preparedStatement.setString(2, "A");
+preparedStatement.setString(3, "Ryan");
+
+    --> you can execute a PreparedStatement by invoking:
+        --> executeQuery() for SELECT statements
+        --> executeUpdate() for a DDL or update statement
+    --> these statements are similar to the Statement versions, except that they dont have parameters
+        --> since parameters are already defined
+
+    -->Listing34_2 had a security hole
+        --> which where you set textfield for SSN:
+            --> 1 OR TRUE OR 1
+        --> this will ALWAYS return the first students grades
+
+    --> this can be fixed in Listing34_3
