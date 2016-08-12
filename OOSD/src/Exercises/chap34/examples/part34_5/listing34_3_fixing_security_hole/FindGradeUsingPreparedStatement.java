@@ -3,16 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Exercises.chap34.examples.part34_4.listing34_2_applet_access_database;
+package Exercises.chap34.examples.part34_5.listing34_3_fixing_security_hole;
 
+import Exercises.chap34.examples.part34_4.listing34_2_applet_access_database.FindGrade;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import javax.swing.JApplet;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -25,25 +26,24 @@ import javax.swing.JTextField;
  *
  * @author Prithpal Sooriya
  */
-//extends JApplet to be used on the web if we want to
-public class FindGrade extends JApplet {
+//extend JApplet so to use in web page or diplay in frame
+public class FindGradeUsingPreparedStatement extends JApplet {
 
-    //some of the GUI elements
-    //these can be created since they will not change later on
-    private JTextField jtfSSN = new JTextField(9); //max input is 9 chars
-    private JTextField jtfCourseId = new JTextField(5); //max input 5 chars
+    //GUI elements that will be used in other methods
+    private JTextField jtfSSN = new JTextField(9);
+    private JTextField jtfCourseId = new JTextField(5);
     private JButton jbtShowGrade = new JButton("Show Grade");
 
-    //statement for executing queries
-    private Statement statement;
+    //PreparedStatement for executing queries
+    private PreparedStatement preparedStatement;
 
     //initialise the applet
     @Override
     public void init() {
-        //initialise the database connection and create a Statement object
+        //initialise the database
         initialiseDB();
 
-        //action listener for when the button is pressed, execute query
+        //action listener for the button
         jbtShowGrade.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -51,7 +51,7 @@ public class FindGrade extends JApplet {
             }
         });
 
-        //create the rest of the GUI elements
+        //create the other GUI elements
         JPanel jPanel1 = new JPanel();
         jPanel1.add(new JLabel("SSN"));
         jPanel1.add(jtfSSN);
@@ -59,55 +59,26 @@ public class FindGrade extends JApplet {
         jPanel1.add(jtfCourseId);
         jPanel1.add(jbtShowGrade);
 
-        //add the panel to the applet
+        //add the JPanel to the applet
         add(jPanel1, BorderLayout.NORTH);
     }
 
-    //method initialiseDB()
-    //will load drivers, create a connection, and create a statement
+    //method initialiseDB
+    //initialises the database: loads drver, established a connection and creates a statement
     private void initialiseDB() {
-        //try catch exceptions
-        //catch Exception ex = catch any exception thrown (including SQL exception and ClassNotFound exception)
-        try {
-            //load the JDBC driver
-            Class.forName("com.mysql.jdbc.Driver");
-            System.out.println("Driver Loaded!");
-
-            //exstablish a connection
-            Connection connection = DriverManager.getConnection("jdbc:mysql://localhost/javabook?useSSL=false", "Prithpal", "psooriya");
-            //Connect to a database on web host
-            //Connection connection = DriverManager.getConnection("jdbc:myslq://liang.armstrong.edu:1521/javabook", ...);
-            //connection with mysql is with string "jdbc:mysql://[host]:[port]/database name
-            //host can be anything (IP address, 
-            System.out.println("Connection to database made!");
-
-            //create a statement
-            statement = connection.createStatement();
-            System.out.println("Statment created!");
-
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-    }
-
-    //method jbtShowGrade_actionPerformed(ActionEvent e)
-    //will execute the statement, return a result (ResultSet) and process the ResultSet
-    private void jbtShowGrade_actionPerformed(ActionEvent e) {
-        //get the text from the inputs
-        String ssn = jtfSSN.getText();
-        String courseId = jtfCourseId.getText();
-
         //try and catch exceptions
-        //catch SQL exception due to query
+        //catch Exception, from any thrown exception
         try {
-//            String queryString
-//                    = "SELECT firstName, mi, lastName, title, grade " //columns to use
-//                    + "FROM Student, Enrollment, Course " //tables to use
-//                    + "WHERE "
-//                    + "Student.ssn = '" + ssn + "' " //return must have correct ssn
-//                    + "AND Enrollement.courseId = '" + courseId + "' " //return must have correct courseID
-//                    + "AND Enrollment.courseId = Course.courseId " //creates the join to enrollment and course
-//                    + "AND Enrollment.ssn = Student.ssn "; //creates the join to enrollment and student
+            //load the driver
+            Class.forName("com.mysql.jdbc.Driver");
+            System.out.println("MySQL Driver Loaded...");
+
+            //establish a connection
+            Connection connection = DriverManager.getConnection("jdbc:mysql://localhost/javabook?useSSL=false", "Prithpal", "psooriya");
+            System.out.println("Connection to database established...");
+
+            //create the query string (to work on)
+            //this string is a placeholder, in which the '?' will be filled in later
             String queryString
                     = "SELECT \n"
                     + "    firstName, mi, lastName, title, grade\n"
@@ -116,12 +87,37 @@ public class FindGrade extends JApplet {
                     + "    Enrollment,\n"
                     + "    Course\n"
                     + "WHERE\n"
-                    + "    Student.ssn = '" + ssn + "'\n"
-                    + "        AND Enrollment.courseId = '" + courseId + "'\n"
+                    + "    Student.ssn = ?\n"
+                    + "        AND Enrollment.courseId = ?\n"
                     + "        AND enrollment.courseId = Course.courseId\n"
                     + "        AND enrollment.ssn = student.ssn";
-            ResultSet resultSet = statement.executeQuery(queryString);
 
+            //create a statement
+            preparedStatement = connection.prepareStatement(queryString);
+            System.out.println("PrepareStatement Created...");
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    //method jbtShowGrade_actionPerformed
+    //action performed when button is pressed
+    //will get the inputs from user, and place them into the the question marks above
+    private void jbtShowGrade_actionPerformed(ActionEvent e) {
+        //get the user inputs
+        String ssn = jtfSSN.getText();
+        String courseId = jtfCourseId.getText();
+        //try and catch exception
+        //catch SQLException due to SQL query/statement/string error
+        try {
+            //set the '?' to the correct value, REMEMBER starts at 1
+            preparedStatement.setString(1, ssn);
+            preparedStatement.setString(2, courseId);
+            
+            //execute the query and get the ResultSet
+            ResultSet resultSet = preparedStatement.executeQuery();
+            System.out.println("PreparedStatement Executed!");
+            
             //process the result set
             if (resultSet.next()) {
                 String firstName = resultSet.getString(1);
@@ -136,12 +132,11 @@ public class FindGrade extends JApplet {
             } else {
                 JOptionPane.showMessageDialog(null, "Not Found");
             }
-
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
     }
-
+    
     //main method to run code
     public static void main(String[] args) {
         //create the applet
@@ -161,5 +156,4 @@ public class FindGrade extends JApplet {
         frame.setVisible(true);
 
     }
-
 }

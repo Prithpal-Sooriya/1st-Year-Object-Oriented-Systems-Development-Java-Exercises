@@ -1,0 +1,100 @@
+CallableStatement
+
+    --> CallableStatement is an interface designed to execute SQL-stored procedures
+        --> The procedures may have IN, OUT or IN OUT parameters.
+            --> IN parameter = RECEIVES the value passed to the procedure when called
+            --> OUT prarameter = RETURNS a value after the procedure is completed
+                --> does not hold any value when the procedure is called
+            --> IN OUT parameter contains a value passed to the procedure when it is called
+                --> returns a value after it is competed
+================================================================================
+Oracle PL/SQL, and java implementation
+
+        --> what is Oracle PL/SQL
+            --> "it is a procedural language designed specifically to embrace SQL statements within its syntax"
+                --> oracle web site
+        --> MySQL has a procedural language built in (procedures are called routines)
+
+        --> e.g. procedure in Oracle PL/SQL
+            --> has IN parameter p1, OUT parameter p2, and IN OUT parameter p3
+                CREATE OR REPLACE PROCEDURE sampleProcedure
+                    (p1 IN VARCHAR, p2 OUT NUMBER, p3 IN OUT INTEGER) IS
+                BEGIN
+                    /* do something */
+                END sampleProcedure;
+
+    --> CallableStatement object can be created using prepareCall(String call)
+        --> prepareCall(String call) is method in Connection interface
+    -->  e.g. CallableStatement  created on a Connection for procedure simpleProcedure
+        CallableStatement callableStatement = connection.prepareCall("{call sampleProcedure(?, ?, ?)}");
+        //Connection object is already created
+        //"{call sampleProcedure(?, ?, ?)}" invokes the method/procedure in Oracle PL/SQL
+
+    --> "{call sampleProcedure(?, ?, ?)}" is referred to as the SQL escape syntax
+        --> signals the driver that the code within it should be handled differently.
+    --> The driver parses the escape syntax and translates it into code that the dataabase understands
+    
+    --> in this case sampleProcedure is an Oracle procedure
+        --> the 'call' is translated to the String BEGIN (from the Oracle PL/SQL)
+        --> END (from the Oracle PL/SQL) is the end of the execution
+
+    --> you can call procedures as well as functions
+        --> syntax to create an SQL callable statement for a function:
+            "{? = call functionName(?, ?, ...)}"
+
+    --> CallableStatement inherits PreparedStatement.
+        --> The CallableStatement provides methods:
+            --> for registering OUT parameters and getting values from OUT
+            --> methods to set IN and IN OUT parameters (these are the same methods from PreparedStatement)
+        --> e.g. from sampleProcedure above
+            --> this line: (p1 IN VARCHAR, p2 OUT NUMBER, p3 IN OUT INTEGER)
+            //callableStatement is an object of CallableStatement
+
+            //register IN parameters
+            callableStatement.setString(1, "Dallas"); //set "Dallas" into p1
+            callableStatement.setLong(3, 1); //set 1 into p3
+
+            //register OUT parameters
+            callableStatement.registerOutParameters(2, java.sql.TYPES.DOUBLE); //register double output from p2
+            callableStatement.registerOutParameters(3, java.sql.TYPES.INTEGER); //register integer output from p3 (remember p3 is IN OUT)
+
+        --> you can use execute() or executeUpdate() methods from PreparedStatement/CallableStatement
+        --> then use the GET methods to get the values back for the OUT parameters
+            double d = callableStatement.getDouble(2); //get double from p2
+            int i = callableStatement.getInt(3); //get double from p3
+================================================================================
+MySQL and Java implementation
+
+    --> e.g. MySQL function that returns the number of records in the table
+        --> returns values/number of records that match specified firstName and lastName from Student
+
+/* Callable statement example. Use MySQL version 5 (time of using this, I'm using ver 5.7) */
+
+DROP FUNCTION IF EXISTS studentFound; -- forget about this function if it already exists
+DELIMETER //
+
+    CREATE FUNCTION studentFound(first VARCHAR(20), last VARCHAR(20))
+        RETURNS INT
+    BEGIN
+        DECLARE RESULT int;
+        
+        SELECT
+            COUNT(*)
+        FROM 
+            Student
+        WHERE
+            Student.lastName = last;
+
+        RETURN RESULT
+    END;
+//
+
+DELIMETER ;
+-- please note the space between the DELEMITER and ;
+
+    --> To create a function, easiest way is to go into MySQL workbench and create a new function
+        --> write down the function (don't need to worry about the delimeter)
+        --> rename the function
+        --> give function parameters and return value (if there is a return value)
+        --> write in code to execute inside the BEGIN and END
+        --> apply the changes and MySQL workbench will do the rest. DONE
