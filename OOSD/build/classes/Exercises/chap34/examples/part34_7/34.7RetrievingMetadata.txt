@@ -1,0 +1,9 @@
+Database metadata
+    --> URL, username, passowrd, JDBC driver, etc
+        --> all can be contained into DatabaseMetaData interface
+    --> ResultSet metadata: column count; column names; ect
+        --> all can be contained into the ResultSetMetaData interface
+
+
+    --> JDBC provides the DatabaseMetaData interface for obtaining database -wide information 
+    --> ResultSetMetaData interface for obtaining information on a specific result set

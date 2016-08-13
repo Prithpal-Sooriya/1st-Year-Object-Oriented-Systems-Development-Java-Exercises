@@ -1,0 +1,14 @@
+Database Metadata
+
+    --> Connection interface creates a connection with the database
+    --> within the connection SQL statements can be created and executed
+        --> executions can return a ResultSet (from executeQuery(); method)
+
+    --> Connection also provides metadata about the database (that it is connected to)
+        --> describes:  capabilities of the database; supported SQL grammar; stored procedures; etc.
+
+    --> to get the metadata use Connection's getMetaData();
+    --> to store the metadata use DatabaseMetaData object to create an instance of it
+    --> code:
+//Connection object is already created
+DatabaseMetaData dbMetaData = connection.getMetaData();
