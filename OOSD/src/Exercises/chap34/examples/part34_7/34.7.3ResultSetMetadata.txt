@@ -1,0 +1,13 @@
+ResultSet Meta Data:
+
+    --> ResultSetMetaData interface describes information pertaining to the result set
+    --> ReulstSetMetaData object can be used to find the types and properties of the columns in a ResultSet
+
+    --> To obtain the ResultSetMetaData object, use the getMetaData() method:
+        --> Example code
+            ResultSetMetaData rsMetaData = resultSet.getMetaData(); //resultset is an object of ResultSet
+
+        --> you can use getColumnName(int) to get the name of the column
+
+        --> listing 34.7 displays all the column names and contents resulting from SQL SELECT statement:
+            SELECT * FROM Enrollment;

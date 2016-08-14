@@ -1,0 +1,6 @@
+Obtaining Database Tables:
+
+    --> You can identify the tables in the database through database metadata
+        --> Done by using getTables() method from the DatabaseMetaData class.
+
+    --> Listing 34.6 is does this.
