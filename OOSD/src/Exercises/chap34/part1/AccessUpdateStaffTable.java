@@ -9,6 +9,10 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
 import javax.swing.JApplet;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -21,7 +25,6 @@ import javax.swing.JTextField;
  *
  * @author Prithpal Sooriya
  */
-
 //extends JApplet
 public class AccessUpdateStaffTable extends JApplet {
 
@@ -41,7 +44,7 @@ public class AccessUpdateStaffTable extends JApplet {
     JButton jbtClear = new JButton("Clear");
 
     JLabel jlMessage = new JLabel("Applet Created!");
-    
+
     //override method from JApplet: init()
     //initialise the JApplet
     @Override
@@ -49,10 +52,17 @@ public class AccessUpdateStaffTable extends JApplet {
 
         //create the gui
         createGUI();
-        
+
+        //try and load the driver (if failed state)
+        //catch ClassNotFoundExcption
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+        } catch (ClassNotFoundException ex) {
+            System.err.println(ex);
+        }
+
         //set button actions
         buttonActions();
-
     }
 
     private void createGUI() {
@@ -60,7 +70,7 @@ public class AccessUpdateStaffTable extends JApplet {
         JPanel panelId = new JPanel();
         panelId.add(new JLabel("ID "));
         panelId.add(jtfId);
-        
+
         //name frame
         JPanel panelName = new JPanel();
         //add lastName
@@ -72,12 +82,12 @@ public class AccessUpdateStaffTable extends JApplet {
         //add mi
         panelName.add(new JLabel("mi "));
         panelName.add(jtfMi);
-        
+
         //address frame
         JPanel panelAddress = new JPanel();
         panelAddress.add(new JLabel("Address "));
         panelAddress.add(jtfAddress);
-        
+
         //city and state frame
         JPanel panelCityAndState = new JPanel();
         //add city
@@ -86,19 +96,19 @@ public class AccessUpdateStaffTable extends JApplet {
         //add state
         panelCityAndState.add(new JLabel("State "));
         panelCityAndState.add(jtfState);
-        
+
         //telephone frame
         JPanel panelTelephone = new JPanel();
         panelTelephone.add(new JLabel("Telephone "));
         panelTelephone.add(jtfTelephone);
-        
+
         //button frame
         JPanel panelButtons = new JPanel();
         panelButtons.add(jbtView);
         panelButtons.add(jbtInsert);
         panelButtons.add(jbtUpdate);
         panelButtons.add(jbtClear);
-        
+
         //add all these frames to a master frame (gridview)
         JPanel panelMaster = new JPanel();
         panelMaster.setLayout(new GridLayout(7, 1));
@@ -112,44 +122,79 @@ public class AccessUpdateStaffTable extends JApplet {
         JPanel panelMessage = new JPanel();
         panelMessage.add(jlMessage);
         panelMaster.add(panelMessage);
-        
+
         //add this master to the applet
         add(panelMaster, BorderLayout.NORTH);
-        
+
         //set max amount of charcters for each JTextField
-        //...
+        //nevermind, will have to use a DocumentFilter or intercept key presses
+        //KISS
     }
 
     private void buttonActions() {
+
+        //view button, will return "record found" or "record not found"
         jbtView.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
                 jlMessage.setText("View Button Clicked!");
+
+                //get the id entered
+                String stringId = jtfId.getText().trim();
+
+                //now check if the id is 9 NUMBERS
+                if (!stringId.matches("\\d{9}")) {
+                    System.out.println("ID not valid (needs to be 9 numbers [0-9]");
+                } else {
+                    //now time to use the JDBC stuff!!!
+
+                    //try and catch execptions
+                    //catch SQLExcpetion due to establishing connection and accessing database
+                    try {
+                        //Drvier alreadly loaded, so create a connection
+                        Connection connection = DriverManager.getConnection("jdbc:mysql://localhost/javabook?useSSL=false", "Prithpal", "psooriya");
+                        
+                        //create a statement
+                        Statement statement = connection.createStatement();
+                    } catch (SQLException ex) {
+                        System.err.println(ex);
+                    }
+                }
             }
         });
-        
+
         jbtInsert.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
                 jlMessage.setText("Insert Button Clicked!");
             }
         });
-        
+
         jbtUpdate.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
                 jlMessage.setText("Update Button Clicked!");
             }
         });
-        
+
+        //when clear button is pressed need to clear the text from all the TextFields
         jbtClear.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
                 jlMessage.setText("Clear Button Clicked!");
+
+                jtfId.setText("");
+                jtfLastName.setText("");
+                jtfFirstName.setText("");
+                jtfMi.setText("");
+                jtfAddress.setText("");
+                jtfCity.setText("");
+                jtfState.setText("");
+                jtfTelephone.setText("");
             }
         });
     }
-    
+
     //main method to run code
     public static void main(String[] args) {
         //create an instance of the applet
