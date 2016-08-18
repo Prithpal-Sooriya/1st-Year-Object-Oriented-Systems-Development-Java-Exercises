@@ -11,6 +11,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import javax.swing.JApplet;
@@ -147,17 +148,55 @@ public class AccessUpdateStaffTable extends JApplet {
                     System.out.println("ID not valid (needs to be 9 numbers [0-9]");
                 } else {
                     //now time to use the JDBC stuff!!!
+                    //need to check if this user is in the database
+                    Connection connection = null;
+                    Statement statement = null;
 
                     //try and catch execptions
                     //catch SQLExcpetion due to establishing connection and accessing database
                     try {
                         //Drvier alreadly loaded, so create a connection
-                        Connection connection = DriverManager.getConnection("jdbc:mysql://localhost/javabook?useSSL=false", "Prithpal", "psooriya");
-                        
+                        connection = DriverManager.getConnection("jdbc:mysql://localhost/javabook?useSSL=false", "Prithpal", "psooriya");
+
                         //create a statement
-                        Statement statement = connection.createStatement();
+                        statement = connection.createStatement();
+
+                        //create query (to view new user)
+                        String query
+                                = "SELECT \n"
+                                + "    id\n"
+                                + "FROM\n"
+                                + "    staff\n"
+                                + "WHERE\n"
+                                + "    id = '" + stringId + "'";
+                        
+                        //execute the statement (to return the result set
+                        ResultSet resultSet = statement.executeQuery(query);
+                        
+                        //get out of the stating column (which is null)
+                        resultSet.next();
+                        
+                        //check if there is data left in the resultSet or not
+                        if(resultSet.next()) {
+                            jlMessage.setText("Record Found");
+                        } else {
+                            jlMessage.setText("Record Not Found");
+                        }
+                        
                     } catch (SQLException ex) {
                         System.err.println(ex);
+                    } finally {
+                        try {
+                            if (connection != null) {
+                                connection.close();
+                            }
+                            if (statement != null) {
+                                statement.close();
+                            }
+                        } catch (SQLException ex) {
+                            System.err.println("Error in closing");
+                            System.err.println(ex);
+                        }
                     }
                 }
             }
