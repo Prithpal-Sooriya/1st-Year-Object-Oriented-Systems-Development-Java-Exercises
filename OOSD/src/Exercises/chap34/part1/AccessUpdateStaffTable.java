@@ -143,8 +143,8 @@ public class AccessUpdateStaffTable extends JApplet {
                 //get the id entered
                 String stringId = jtfId.getText().trim();
 
-                //now check if the id is 9 NUMBERS
-                if (!stringId.matches("\\d{9}")) {
+                //validate ID
+                if (!validateID(stringId)) {
                     System.out.println("ID not valid (needs to be 9 numbers [0-9]");
                 } else {
                     //now time to use the JDBC stuff!!!
@@ -169,20 +169,20 @@ public class AccessUpdateStaffTable extends JApplet {
                                 + "    staff\n"
                                 + "WHERE\n"
                                 + "    id = '" + stringId + "'";
-                        
+
                         //execute the statement (to return the result set
                         ResultSet resultSet = statement.executeQuery(query);
-                        
+
                         //get out of the stating column (which is null)
                         resultSet.next();
-                        
+
                         //check if there is data left in the resultSet or not
-                        if(resultSet.next()) {
+                        if (resultSet.next()) {
                             jlMessage.setText("Record Found");
                         } else {
                             jlMessage.setText("Record Not Found");
                         }
-                        
+
                     } catch (SQLException ex) {
                         System.err.println(ex);
                     } finally {
@@ -206,6 +206,51 @@ public class AccessUpdateStaffTable extends JApplet {
             @Override
             public void actionPerformed(ActionEvent ae) {
                 jlMessage.setText("Insert Button Clicked!");
+                //action needed for insert
+                //need to ensure that the ID for person is not used
+
+                //first validate ID
+                //get the id entered
+                String stringId = jtfId.getText().trim();
+                if (!validateID(stringId)) {
+                    System.out.println("ID not valid (needs to be 9 numbers [0-9]");
+                } else {
+                    //time to create a connection and create the new item
+                    Connection connection = null;
+                    Statement statement = null;
+
+                    //try catch exceptions
+                    //catch SQLException due to SQL commands
+                    try {
+                        //Drvier alreadly loaded, so create a connection
+                        connection = DriverManager.getConnection("jdbc:mysql://localhost/javabook?useSSL=false", "Prithpal", "psooriya");
+
+                        //create a statement
+                        statement = connection.createStatement();
+
+                        //create query (to view new user)
+                        String query;
+                        
+                        //execute statement
+                        statement.execute(query);
+                        
+                    } catch (SQLException ex) {
+                        System.err.println(ex);
+                    } finally {
+                        //close SQL stuff
+                        try {
+                            if (connection != null) {
+                                connection.close();
+                            }
+                            if (statement != null) {
+                                statement.close();
+                            }
+                        } catch (SQLException ex) {
+                            System.err.println("Error in closing");
+                            System.err.println(ex);
+                        }
+                    }
+                }
             }
         });
 
@@ -234,7 +279,17 @@ public class AccessUpdateStaffTable extends JApplet {
         });
     }
 
+    public boolean validateID(String stringId) {
+        boolean returnValue = false;
+
+        //validate the input
+        if (!stringId.matches("\\d{9}")) {
+            returnValue = true;
+        }
+        return returnValue;
+    }
     //main method to run code
+
     public static void main(String[] args) {
         //create an instance of the applet
         AccessUpdateStaffTable applet = new AccessUpdateStaffTable();
