@@ -172,11 +172,8 @@ public class AccessUpdateStaffTable extends JApplet {
 
                         //execute the statement (to return the result set
                         ResultSet resultSet = statement.executeQuery(query);
-
-                        //get out of the stating column (which is null)
-                        resultSet.next();
-
-                        //check if there is data left in the resultSet or not
+                        
+                        //check if there is data found in the resultSet or not
                         if (resultSet.next()) {
                             jlMessage.setText("Record Found");
                         } else {
@@ -231,7 +228,7 @@ public class AccessUpdateStaffTable extends JApplet {
                         //check if the ID is available
                         if (idAvailable(connection)) {
                             //check if all the textfields are filled in
-                            if (checkAllTextFields() == true) {
+                            if (checkAllTextFields()) {
 
                                 //create query (to view new user)
                                 String query
@@ -296,7 +293,42 @@ public class AccessUpdateStaffTable extends JApplet {
                     //try catch exceptions
                     //catch SQLException due to SQL commands
                     try {
+                        //establish a connection
                         connection = DriverManager.getConnection("jdbc:mysql://localhost/javabook?useSSL=false", "Prithpal", "psooriya");
+
+                        //create a statement
+                        statement = connection.createStatement();
+
+                        //check if the id IS NOT available (already taken)
+                        if (!idAvailable(connection)) {
+                            //check if all fields are filled
+                            if (checkAllTextFields()) {
+                                //create the query
+                                String query
+                                        = "UPDATE Staff \n"
+                                        + "SET \n"
+                                        + "    lastName = '" + jtfLastName.getText().trim() + "',\n"
+                                        + "    firstName = '" + jtfFirstName.getText().trim() + "',\n"
+                                        + "    mi = '" + jtfMi.getText().trim() + "',\n"
+                                        + "    address = '" + jtfAddress.getText().trim() + "',\n"
+                                        + "    city = '" + jtfCity.getText().trim() + "',\n"
+                                        + "    state = '" + jtfState.getText().trim() + "',\n"
+                                        + "    telephone = '" + jtfTelephone.getText().trim() + "',\n"
+                                        + "    email = NULL\n"
+                                        + "WHERE\n"
+                                        + "    id = '" + stringId + "'";
+
+                                //execute statement
+                                statement.execute(query);
+
+                                //send a message stating item has been added to the table
+                                jlMessage.setText("Record has been updated");
+                            } else {
+                                jlMessage.setText("Action not performed, fill in all TextFields");
+                            }
+                        } else {
+                            jlMessage.setText("ID does not exist, so cannot be updated!");
+                        }
                     } catch (SQLException ex) {
                         System.err.println(ex);
                     } finally {
@@ -408,11 +440,11 @@ public class AccessUpdateStaffTable extends JApplet {
             //execute statement and get ResultSet
             ResultSet resultSet = statement.executeQuery(query);
 
-            //get out of starting null location
-            resultSet.next();
-
-            //check if next item exists or not (if exists == not available)
-            returnValue = (!resultSet.next());
+            //see if there is any data in table
+            //null record at end of table
+                //so not data = null record given = false (is avaialable)
+            returnValue = !resultSet.next();
+            
         } catch (SQLException ex) {
             System.out.println(ex);
         } finally {

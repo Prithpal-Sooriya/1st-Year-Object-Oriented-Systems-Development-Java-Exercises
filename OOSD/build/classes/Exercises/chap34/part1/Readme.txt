@@ -18,6 +18,11 @@ Access and update staff table:
         );
 
         --> table created before hand (so as to access/insert later)
+
+        --> NOTE
+            --> I had this error in the code for trying to check if there is data in the ResultSet or not
+            --> the problem was that NULL record is at the END not START
+                --> so: CHECK NULL RECORD at END, not START
 ==========================
 GUI:
 //id Panel
