@@ -145,7 +145,7 @@ public class AccessUpdateStaffTable extends JApplet {
 
                 //validate ID
                 if (!validateID(stringId)) {
-                    System.out.println("ID not valid (needs to be 9 numbers [0-9]");
+                    jlMessage.setText("ID not valid (needs to be 9 numbers [0-9]");
                 } else {
                     //now time to use the JDBC stuff!!!
                     //need to check if this user is in the database
@@ -213,7 +213,7 @@ public class AccessUpdateStaffTable extends JApplet {
                 //get the id entered
                 String stringId = jtfId.getText().trim();
                 if (!validateID(stringId)) {
-                    System.out.println("ID not valid (needs to be 9 numbers [0-9]");
+                    jlMessage.setText("ID not valid (needs to be 9 numbers [0-9]");
                 } else {
                     //time to create a connection and create the new item
                     Connection connection = null;
@@ -228,12 +228,37 @@ public class AccessUpdateStaffTable extends JApplet {
                         //create a statement
                         statement = connection.createStatement();
 
-                        //create query (to view new user)
-                        String query;
-                        
-                        //execute statement
-                        statement.execute(query);
-                        
+                        //check if the ID is available
+                        if (idAvailable(connection)) {
+                            //check if all the textfields are filled in
+                            if (checkAllTextFields() == true) {
+
+                                //create query (to view new user)
+                                String query
+                                        = "insert into Staff values (\n"
+                                        + "	'" + jtfId.getText().trim() + "',\n"
+                                        + "    '" + jtfLastName.getText().trim() + "',\n"
+                                        + "    '" + jtfFirstName.getText().trim() + "',\n"
+                                        + "    '" + jtfMi.getText().trim() + "',\n"
+                                        + "    '" + jtfAddress.getText().trim() + "',\n"
+                                        + "    '" + jtfCity.getText().trim() + "',\n"
+                                        + "    '" + jtfState.getText().trim() + "',\n"
+                                        + "    '" + jtfTelephone.getText().trim() + "',\n"
+                                        + "    null\n" //null for email (no email given)
+                                        + ")";
+
+                                //execute statement
+                                statement.execute(query);
+
+                                //send a message stating item has been added to the table
+                                jlMessage.setText("Record has been added");
+
+                            } else {
+                                jlMessage.setText("Action not performed, fill in all TextFields");
+                            }
+                        } else {
+                            jlMessage.setText("ID has alread been taken!");
+                        }
                     } catch (SQLException ex) {
                         System.err.println(ex);
                     } finally {
@@ -258,13 +283,46 @@ public class AccessUpdateStaffTable extends JApplet {
             @Override
             public void actionPerformed(ActionEvent ae) {
                 jlMessage.setText("Update Button Clicked!");
+
+                //to update, need to check ID is in database
+                //first check if ID is valid
+                String stringId = jtfId.getText().trim();
+                if (!validateID(stringId)) {
+                    jlMessage.setText("ID not valid (needs to be 9 numbers [0-9]");
+                } else {
+                    Connection connection = null;
+                    Statement statement = null;
+
+                    //try catch exceptions
+                    //catch SQLException due to SQL commands
+                    try {
+                        connection = DriverManager.getConnection("jdbc:mysql://localhost/javabook?useSSL=false", "Prithpal", "psooriya");
+                    } catch (SQLException ex) {
+                        System.err.println(ex);
+                    } finally {
+                        //try and catch exceptions
+                        try {
+                            if (connection != null) {
+                                connection.close();
+                            }
+                            if (statement != null) {
+                                statement.close();
+                            }
+                        } catch (SQLException ex) {
+                            System.err.println("Error in closing");
+                            System.err.println(ex);
+                        }
+                    }
+                }
             }
         });
 
         //when clear button is pressed need to clear the text from all the TextFields
-        jbtClear.addActionListener(new ActionListener() {
+        jbtClear.addActionListener(
+                new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent ae) {
+            public void actionPerformed(ActionEvent ae
+            ) {
                 jlMessage.setText("Clear Button Clicked!");
 
                 jtfId.setText("");
@@ -276,20 +334,102 @@ public class AccessUpdateStaffTable extends JApplet {
                 jtfState.setText("");
                 jtfTelephone.setText("");
             }
-        });
+        }
+        );
     }
 
     public boolean validateID(String stringId) {
-        boolean returnValue = false;
+        boolean returnValue = true;
 
         //validate the input
         if (!stringId.matches("\\d{9}")) {
-            returnValue = true;
+            returnValue = false;
         }
         return returnValue;
     }
-    //main method to run code
 
+    //check all text fields
+    public boolean checkAllTextFields() {
+        boolean returnValue = true;
+
+        if (jtfId.getText().isEmpty()) {
+            returnValue = false;
+        }
+        if (jtfLastName.getText().isEmpty()) {
+            returnValue = false;
+        }
+        if (jtfFirstName.getText().isEmpty()) {
+            returnValue = false;
+        }
+        if (jtfMi.getText().isEmpty()) {
+            returnValue = false;
+        }
+        if (jtfAddress.getText().isEmpty()) {
+            returnValue = false;
+        }
+        if (jtfCity.getText().isEmpty()) {
+            returnValue = false;
+        }
+        if (jtfState.getText().isEmpty()) {
+            returnValue = false;
+        }
+        if (jtfTelephone.getText().isEmpty()) {
+            returnValue = false;
+        }
+        return returnValue;
+    }
+
+    //check if an id is inside the database or not
+    //@ param1 = Connection connection, will be used to create a quick connection
+    //to check if the id is in the database or not
+    public boolean idAvailable(Connection connection) {
+        boolean returnValue = false;
+        Statement statement = null;
+
+        if (connection == null) {
+            System.out.println("Connection is null");
+            return returnValue;
+        }
+
+        try {
+
+            //create a statement
+            statement = connection.createStatement();
+
+            //create the query
+            String query
+                    = "SELECT \n"
+                    + "    id\n"
+                    + "FROM\n"
+                    + "    staff\n"
+                    + "WHERE\n"
+                    + "    id = '" + jtfId.getText().trim() + "'";
+
+            //execute statement and get ResultSet
+            ResultSet resultSet = statement.executeQuery(query);
+
+            //get out of starting null location
+            resultSet.next();
+
+            //check if next item exists or not (if exists == not available)
+            returnValue = (!resultSet.next());
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        } finally {
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException ex) {
+                    System.out.println(ex);
+                }
+            }
+        }
+
+        //not we can return returnValue
+        return returnValue;
+    }
+
+    //main method to run code
     public static void main(String[] args) {
         //create an instance of the applet
         AccessUpdateStaffTable applet = new AccessUpdateStaffTable();
