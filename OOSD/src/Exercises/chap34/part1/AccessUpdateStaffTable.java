@@ -161,20 +161,8 @@ public class AccessUpdateStaffTable extends JApplet {
                         //create a statement
                         statement = connection.createStatement();
 
-                        //create query (to view new user)
-                        String query
-                                = "SELECT \n"
-                                + "    id\n"
-                                + "FROM\n"
-                                + "    staff\n"
-                                + "WHERE\n"
-                                + "    id = '" + stringId + "'";
-
-                        //execute the statement (to return the result set
-                        ResultSet resultSet = statement.executeQuery(query);
-                        
-                        //check if there is data found in the resultSet or not
-                        if (resultSet.next()) {
+                        //check if the id is NOT available (aka is in the database)
+                        if (!idAvailable(connection)) {
                             jlMessage.setText("Record Found");
                         } else {
                             jlMessage.setText("Record Not Found");
@@ -195,6 +183,7 @@ public class AccessUpdateStaffTable extends JApplet {
                             System.err.println(ex);
                         }
                     }
+                    
                 }
             }
         });
